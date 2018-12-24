@@ -1,0 +1,71 @@
+//! zinc
+library NoSaveGame /* v1.0.0.2
+*************************************************************************************
+*
+*    No Save Game
+*        by nel
+*
+*       It prevents to use the Save Game to all players.
+*
+*************************************************************************************
+*
+*   */ requires /*
+*   
+*       */ SimError /* http://www.wc3c.net/showthread.php?t=101260
+*
+************************************************************************************
+*
+*
+*    boolean nsg
+*       - Set false, to allow to all players to use Save Game.
+*
+*    string nsgErrMsg
+*       - Error Message
+*
+*    boolean nsgDisplayErrMsg
+*       - Set false, if you don't want to show the Error Message in-game.
+*
+*
+************************************************************************************/
+{
+    public {    
+        string nsgErrMsg = "You are not allowed to use Save Game.";
+        boolean nsgDisplayErrMsg = true;
+        boolean nsg = true;
+    }
+    
+    private {
+        dialog Dialog = DialogCreate();
+        timer Timer = CreateTimer();
+        
+        function onInit() {
+            trigger trgSave = CreateTrigger();
+            trigger trgStop = CreateTrigger();
+            
+            TriggerRegisterGameEvent( trgSave, EVENT_GAME_SAVE );
+            TriggerAddAction( trgSave, function() {
+                player pl;
+                
+                if( nsg ) {
+                    pl = GetLocalPlayer();
+                    DialogDisplay( pl, Dialog, true );
+                    TimerStart( Timer, 0, false, null);
+                    
+                    if( nsgDisplayErrMsg ) { SimError( pl, nsgErrMsg ); }
+                    pl = null;
+                }
+            });
+            
+            TriggerRegisterTimerExpireEvent( trgStop, Timer );
+            TriggerAddAction( trgStop, function() {
+                if( nsg ) {
+                    DialogDisplay( GetLocalPlayer(), Dialog, false );
+                }
+            });
+            
+            trgSave = null;
+            trgStop = null;
+        } 
+    }
+}
+//! endzinc
