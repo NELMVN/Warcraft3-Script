@@ -1,0 +1,54 @@
+//! zinc
+library ItemRestriction 
+
+	requires
+		SimError
+		
+{
+	private {
+		function GetClass( integer class ) -> string {
+			//! textmacro Class takes class, name
+			if( class == $class$ ) {
+				return "$name$";
+			} else
+			//! endtextmacro
+		
+			//! runtextmacro Class( "70", "sword" )
+			//! runtextmacro Class( "71", "armor" )
+			{ return null; }
+		}
+	
+		function Check( unit whichUnit, item whichItem ) {
+			integer slot = 0;
+			integer class = 0;
+			item i;
+			string nameClass;
+			
+			while( slot < bj_MAX_INVENTORY ) {
+				i = UnitItemInSlot(whichUnit, slot);
+				class = GetItemLevel(i);
+				nameClass = GetClass(class);
+				if( i != whichItem && nameClass != null ){
+					if( class == GetItemLevel(whichItem) ) {
+						UnitRemoveItem(whichUnit, whichItem);
+						SimError(GetOwningPlayer(whichUnit), "You can't hold more than 1 " + nameClass + ".");
+						break;
+					}
+				}
+				slot = slot + 1;
+			}
+			
+			i = null;
+		}
+
+		function onInit() {
+			trigger trg = CreateTrigger();
+			TriggerRegisterAnyUnitEventBJ(trg, EVENT_PLAYER_UNIT_PICKUP_ITEM);
+			TriggerAddAction(trg, function(){
+				Check(GetTriggerUnit(), GetManipulatedItem());
+			});
+			trg = null;
+		}
+	}
+}
+//! endzinc
