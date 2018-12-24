@@ -1,6 +1,5 @@
 //! zinc
-library ItemOwner /* 1.0.0.0
-*/
+library ItemOwner
 
     requires
         Table
