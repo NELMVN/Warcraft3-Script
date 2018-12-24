@@ -1,0 +1,59 @@
+//! zinc
+library GameClock { /* v1.0.0.1
+*************************************************************************************
+*
+*    Game Clock
+*        by nel
+*
+*       It allows you to get the elapsed time.
+*
+************************************************************************************
+*
+*   SETTINGS
+*
+*/
+    public {
+        constant string delimiter = " : ";
+    }
+/*
+************************************************************************************
+*
+*    Function
+*
+*        function GetElapsedTime takes nothing returns string
+*            -   It returns elapsed time as hh/mm/ss format.
+*
+***********************************************************************************/
+
+    private {
+        constant timer TIMER = CreateTimer();
+    
+        module inc { private static method onInit() {
+            TimerStart(TIMER, 100000000, true, null);
+        }}
+        
+        struct Z extends array { module inc; }
+    }
+    
+    public function GetElapsedTime() -> string {
+        real currTime = TimerGetElapsed(TIMER);
+        integer s = R2I(ModuloReal(currTime, 60));
+        integer m = R2I(ModuloReal(currTime, 3600) / 60);
+        integer h = R2I(currTime / 3600);
+        string format = "";
+        
+        //! textmacro GAMECLOCK_TimeFormat takes Time, delimiter
+        if( $Time$ < 10 ) {
+            format = format + "0" + I2S($Time$) $delimiter$;
+        } else {
+            format = format + I2S($Time$) $delimiter$;
+        }
+        //! endtextmacro
+        //! runtextmacro GAMECLOCK_TimeFormat("h", "+delimiter")
+        //! runtextmacro GAMECLOCK_TimeFormat("m", "+delimiter")
+        //! runtextmacro GAMECLOCK_TimeFormat("s", "")
+            
+        return format;
+    }
+}
+//! endzinc
