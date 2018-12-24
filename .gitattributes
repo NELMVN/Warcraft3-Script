@@ -1,1 +1,2 @@
 *.zn linguist-language=Solidity
+*.zn  gitlab-language=prolog
