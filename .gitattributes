@@ -1,1 +1,1 @@
-*.sol linguist-language=Solidity
+*.zn linguist-language=Solidity
