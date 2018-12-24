@@ -1,2 +1,3 @@
-# SYU-RPG
-It is a custom Warcraft III multiplayer rpg map. SYU stands for Strengthen Your Unit.
+# Zinc Scripts
+
+You need to have a Vexorian's JassHelper to compile the Zinc Script into a Jass Script.
