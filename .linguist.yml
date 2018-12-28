@@ -1,0 +1,49 @@
+Zinc:
+  extensions:
+    - ".zn"
+
+  default:
+    color: "#808A9F"
+
+  identifier:
+    color: "#333333"
+
+  number:
+    color: "#FF6600"
+
+  string:
+    color: "#333300"
+
+  comment:
+    color: "#CCF5AC"
+    single_line: "//"
+    begin_multiline: "/*"
+    end_multiline: "*/"
+
+  group:
+    - color: "#C70039"
+      operators:
+        - "//!"
+  
+    - color: "#72EEBB"
+      operators:
+        - "==="
+        - ">="
+      keywords:
+        - "int"
+        - "float"
+      regexes:
+        - regex: "&(amp;)\/[^\/]*\/([\\S]?)*"
+          modifier: ""
+
+    - color: "#FF00FF"
+      keywords:
+        - "if"
+        - "else"
+        - "switch"
+        - "let"
+
+    - color: "#000000"
+      multiline:
+        - begin: "\"\"\""
+          end:   "\"\"\""
