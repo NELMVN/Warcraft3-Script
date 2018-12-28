@@ -1,19 +1,21 @@
 //! zinc
-library NoSaveGame /* v1.0.0.2
-*************************************************************************************
+library NoSaveGame /* v1.0.0.3
+************************************************************************************
 *
 *    No Save Game
 *        by nel
 *
-*       It prevents to use the Save Game to all players.
+*       It prevents to use Save Game function to all players.
 *
-*************************************************************************************
-*
-*   */ requires /*
-*   
-*       */ SimError /* http://www.wc3c.net/showthread.php?t=101260
-*
-************************************************************************************
+***********************************************************************************/
+
+
+       requires
+
+           SimError /* http://www.wc3c.net/showthread.php?t=101260 */
+
+
+/***********************************************************************************
 *
 *
 *    boolean nsg
@@ -26,19 +28,19 @@ library NoSaveGame /* v1.0.0.2
 *       - Set false, if you don't want to show the Error Message in-game.
 *
 *
-************************************************************************************/
+***********************************************************************************/
 {
     public {    
-        string nsgErrMsg = "You are not allowed to use Save Game.";
+        string  nsgErrMsg = "You are not allowed to use Save Game.";
         boolean nsgDisplayErrMsg = true;
         boolean nsg = true;
     }
-    
+
     private {
-        dialog Dialog = DialogCreate();
-        timer Timer = CreateTimer();
-        
-        function onInit() {
+        constant dialog DIALOG = DialogCreate();
+        constant timer   TIMER = CreateTimer();
+    
+        module inc { private static method onInit() {
             trigger trgSave = CreateTrigger();
             trigger trgStop = CreateTrigger();
             
@@ -48,24 +50,24 @@ library NoSaveGame /* v1.0.0.2
                 
                 if( nsg ) {
                     pl = GetLocalPlayer();
-                    DialogDisplay( pl, Dialog, true );
-                    TimerStart( Timer, 0, false, null);
+                    DialogDisplay( pl, DIALOG, true );
+                    TimerStart( TIMER, 0, false, null);
                     
                     if( nsgDisplayErrMsg ) { SimError( pl, nsgErrMsg ); }
                     pl = null;
                 }
             });
             
-            TriggerRegisterTimerExpireEvent( trgStop, Timer );
+            TriggerRegisterTimerExpireEvent( trgStop, TIMER );
             TriggerAddAction( trgStop, function() {
-                if( nsg ) {
-                    DialogDisplay( GetLocalPlayer(), Dialog, false );
-                }
+                if( nsg ) { DialogDisplay( GetLocalPlayer(), DIALOG, false ); }
             });
             
             trgSave = null;
             trgStop = null;
-        } 
+        }}
+        
+        struct Z extends array { module inc; }
     }
 }
 //! endzinc
