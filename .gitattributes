@@ -1,1 +1,2 @@
-*.zn linguist-language=ZINC
+*.zn linguist-language=Zinc
+*.txt linguist-language=Html
