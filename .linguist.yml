@@ -19,23 +19,8 @@ Zinc:
   comment:
     color: "#969896"
     single_line: "//"
-
-  group:
-    - color: "#F00BAF"
-      operators:
-        - "=="
-        - "!="
-        - "<="
-        - ">="
-        - "!"
-        - "||"
-        - "&&"
-
-  group:
-    - color: "#FF00FF"
-        multiline:
-          - begin: "//! zinc"
-            end: "//! endzinc"
+    begin_multiline: "/*"
+    end_multiline: "*/"
 
   group:
     # Native types
@@ -140,15 +125,3 @@ Zinc:
         - "weathereffect"
         - "widget"
         - "widgetevent"
-
-    - color: "#fc1153"
-      keywords:
-        - "library"
-    
-    # Non-Jassy Word
-    - color: "#af2652"
-      keywords:
-        - "while"
-        - "for"
-        - "type"
-        - "extends"
