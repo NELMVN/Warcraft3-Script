@@ -16,6 +16,12 @@ wc3Script:
   string:
     color: "#4c5d75"
 
+  comment:
+    color: "#969896"
+    single_line: "//"
+    begin_multiline: "/*"
+    end_multiline: "*/"
+
   group:
     # Native types
     - color: "#a71d5d"
