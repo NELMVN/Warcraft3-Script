@@ -1,0 +1,34 @@
+// *********************************************************************************
+// *
+// *    SYU ORPG war3mapSkin
+// *        by nel
+// *
+// *********************************************************************************
+
+[CustomSkin]
+IdlePeon=war3mapImported\BTNINV_Misc_Bag_07.blp
+
+[FrameDef]
+// Game Menu Button
+WARCRAFT_III_TIPS=|c007EBFF1C|c008BB3E9h|c0098A6E1a|c00A59AD9n|c00B28DD1g|c00BE81C8e|c00CB74C0l|c00D868B8o|c00E55BB0g|r
+KEY_TIPS=Changelog
+SAVE_GAME=|n|n|n|n|n|n|cffff0000Disabled Save Game|r
+KEY_OK=Cl|Cffffffffo|Rse
+
+// Map Info
+QUESTS=Map Info
+KEY_QUESTS=Map Info (|Cfffed312F9|R)
+QUESTSMAIN= 
+QUESTSOPTIONAL= 
+RESOURCE_UBERTIP_UPKEEP_INFO= 
+RESOURCE_UBERTIP_SUPPLY= 
+UPPER_BUTTON_QUEST_TIP=Map Info (|Cfffed312F9|R)
+
+// User Interface
+UPKEEP_NONE=v0.01
+COLON_GOLD_INCOME_RATE=Latest Version: wc3modding.info|c22222222
+RESOURCE_UBERTIP_UPKEEP=If you found bugs or any suggestions, leave me a message at wc3modding.info.
+
+// Bag
+IDLE_PEON=Bag (|Cfffed312F8|R)
+IDLE_PEON_DESC=Your bag is doing absolutely nothing.
