@@ -61,7 +61,7 @@ library GameClock { /* v1.0.0.3
              
             return format;
         }
-   
+
         function GetElapsedTime() -> real {
             return TimerGetElapsed(TIMER);
         }
