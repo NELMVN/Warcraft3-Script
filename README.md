@@ -1,9 +1,5 @@
-# Zinc Scripts
+# ZincScript for Warcraft III
 
-You need to have a Vexorian's JassHelper to compile the Zinc Script into a Jass Script.
+Zinc stands for ZINC is not C. It is requires Vexorian's JassHelper to able to compile the entire script.
 
-You can import the Zinc script to your Warcraft III map.
-```
-//imports the file main.zn from code folder, consider it in zinc language
-//! import zinc "code/main.zn"
-```
+More information about Zinc: http://www.wc3c.net/vexorian/zincmanual.html
