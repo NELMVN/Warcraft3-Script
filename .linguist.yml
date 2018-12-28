@@ -1,5 +1,5 @@
-# Syntax Highlighter for Zinc, vJass, and Jass.
-wc3Script:
+# Syntax Highlighter for Zinc.
+Zinc:
   extensions:
     - ".zn"
     - ".j"
@@ -19,8 +19,23 @@ wc3Script:
   comment:
     color: "#969896"
     single_line: "//"
-    begin_multiline: "/*"
-    end_multiline: "*/"
+
+  group:
+    - color: "#F00BAF"
+      operators:
+        - "=="
+        - "!="
+        - "<="
+        - ">="
+        - "!"
+        - "||"
+        - "&&"
+
+  group:
+    - color: "#FF00FF"
+        multiline:
+          - begin: "//! zinc"
+            end: "//! endzinc"
 
   group:
     # Native types
@@ -129,8 +144,6 @@ wc3Script:
     - color: "#fc1153"
       keywords:
         - "library"
-        - "//! zinc"
-        - "//! endzinc"
     
     # Non-Jassy Word
     - color: "#af2652"
