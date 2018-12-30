@@ -1,3 +1,13 @@
+/***********************************************************************************
+*
+*    This script is made by AceHart. You must put this on your map's custom script
+*    to work.
+*
+*    AceHart's SaveNLoad
+*        - https://www.thehelper.net/threads/save-load-code-yet-another.41354/
+*
+***********************************************************************************/
+
 function SaveLoad_InitialSetup takes nothing returns nothing
     local integer i = 0
     local integer j = 0
