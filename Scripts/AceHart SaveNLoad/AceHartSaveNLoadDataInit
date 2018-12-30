@@ -1,11 +1,17 @@
 //! zinc
-library AceHartSaveNLoadDataInit { /*
+library AceHartSaveNLoadDataInit { /* 
 ***********************************************************************************
 *
 *    This script is only use to initialize the AceHart's Save And Load data.
 *
-*        Requires:
+************************************************************************************
 *
+*    AceHart's SaveNLoad
+*        - https://www.thehelper.net/threads/save-load-code-yet-another.41354/
+*
+************************************************************************************
+*
+*        Requires:
 *            integer udg_SaveLoad_Heroes[]
 *            integer udg_SaveLoad_Heroes_LastIndex
 *            integer udg_SaveLoad_Items[]
