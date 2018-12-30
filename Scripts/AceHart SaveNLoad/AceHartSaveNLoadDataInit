@@ -1,0 +1,71 @@
+//! zinc
+library AceHartSaveNLoadDataInit { /*
+***********************************************************************************
+*
+*    This script is only use to initialize the AceHart's Save And Load data.
+*
+*        Requires:
+*
+*            integer udg_SaveLoad_Heroes[]
+*            integer udg_SaveLoad_Heroes_LastIndex
+*            integer udg_SaveLoad_Items[]
+*            integer udg_SaveLoad_Items_LastIndex
+*            string  udg_SaveLoad_Alphabet
+*            string  udg_SaveLoad_CaseSensitive
+*            string  udg_SaveLoad_UsePlayername
+*
+************************************************************************************
+*
+*   SETTINGS
+*
+*/
+    public {
+        constant string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        constant boolean CASE_SENSITIVE = true;
+        constant boolean USE_PLAYERNAME = true;
+    }
+/*
+***********************************************************************************/
+    
+    private {
+        module inc { private {
+            static method Units() {
+                /*
+                    This is only an example. You need to edit this to your
+                    own data.
+                */
+                udg_SaveLoad_Heroes[1] = 'h000';
+                udg_SaveLoad_Heroes[2] = 'h001';
+                udg_SaveLoad_Heroes[3] = 'h006';
+                udg_SaveLoad_Heroes[4] = 'h007';
+                
+                udg_SaveLoad_Heroes_LastIndex = 4;
+            }
+            
+            static method Items() {
+                /*
+                    This is only an example. You need to edit this to your
+                    own data.
+                */
+                udg_SaveLoad_Items[1] = 'ratf';
+                udg_SaveLoad_Items[2] = 'ches';
+                udg_SaveLoad_Items[3] = 'wlsd';
+                udg_SaveLoad_Items[4] = 'mgtk';
+
+                udg_SaveLoad_Items_LastIndex = 4;
+            }
+            
+            static method onInit() {
+                thistype.Units();
+                thistype.Items();
+                
+                udg_SaveLoad_Alphabet = ALPHABET;
+                udg_SaveLoad_CaseSensitive = CASE_SENSITIVE;
+                udg_SaveLoad_UsePlayername = USE_PLAYERNAME;
+            }
+        }}
+    
+        struct Z extends array { module inc; }
+    }
+}
+//! endzinc
