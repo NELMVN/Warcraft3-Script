@@ -8,17 +8,17 @@ Zinc:
   identifier:
     color: "#000000"
 
-  comment:
-    color: "#008800"
-    single_line: "//"
-    begin_multiline: "/*"
-    end_multiline: "*/"
-
   number:
     color: "#0000aa"
 
   string:
     color: "#0000aa"
+
+  comment:
+    color: "#008800"
+    single_line: "//"
+    begin_multiline: "/*"
+    end_multiline: "*/"
 
   group:
     - color: "#a71d5d"
