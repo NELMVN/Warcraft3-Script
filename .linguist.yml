@@ -24,9 +24,6 @@ Zinc:
     - color: "#a71d5d"
       keywords:
         - "library"
-
-    - color: "#a71d5d"
-      keywords:
         - "public"
         - "private"
         - "type"
