@@ -179,7 +179,12 @@ Zinc:
         - "static"
         - "method"
             
-    - color: "#FF00FF"
+    - color: "#968800"
       multiline:
         - begin: "$"
           end:   "$"
+          
+    - color: "#d40000"
+      multiline:
+        - begin: "//! textmacro"
+          end:   "//! endtextmacro"
