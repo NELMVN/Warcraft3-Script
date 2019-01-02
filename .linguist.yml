@@ -179,6 +179,8 @@ Zinc:
           end:   "$"
           
     - color: "#960000"
-      regexes:
-        - regex: "//!"
-          modifiers: ""
+      keywords:
+        - "//! zinc"
+        - "//! endzinc"
+        - "//! textmacro"
+        - "//! endtextmacro"
