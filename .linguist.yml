@@ -1,6 +1,6 @@
 Zinc:
   extensions:
-    - ".zc"
+    - ".zn"
     - ".zinc"
 
   identifier:
