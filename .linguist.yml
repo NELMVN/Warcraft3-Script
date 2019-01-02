@@ -179,7 +179,7 @@ Zinc:
         - "static"
         - "method"
             
-    - color: "#892525"
-      regexes:
-        - regex: "//!"
-          modifier: ""
+    - color: "#FF00FF"
+      multiline:
+        - begin: "$"
+          end:   "$"
