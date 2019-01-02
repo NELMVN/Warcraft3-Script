@@ -1,7 +1,6 @@
-ZincJass:
+Zinc:
   extensions:
     - ".zn"
-    - ".j"
 
   default:
     color: "#000000"
@@ -185,7 +184,7 @@ ZincJass:
       multiline:
         - begin: "$"
           end:   "$"
-          
+         
     - color: "#c4c4c4"
       keywords:
         - "debug"
