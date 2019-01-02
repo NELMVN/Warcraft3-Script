@@ -132,6 +132,28 @@ Zinc:
         - "widget"
         - "widgetevent"
 
+    - color: "#aa5553"
+      operators:
+        - "&&"
+        - "||"
+        - "+"
+        - "-"
+        - "/"
+        - "*"
+        - "="
+        - "!"
+        - "("
+        - ")"
+        - "{"
+        - "}"
+        - ">"
+        - "<"
+        - "="
+        - ";"
+        - "["
+        - "]"
+        - "'"
+
     - color: "#7a0757"
       keywords:
         - "public"
@@ -156,6 +178,7 @@ Zinc:
         - "else"
         - "static"
         - "method"
+        - "operator"
            
     - color: "#968800"
       multiline:
