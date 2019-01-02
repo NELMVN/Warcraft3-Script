@@ -8,6 +8,12 @@ Zinc:
   identifier:
     color: "#000000"
 
+  comment:
+    color: "#008800"
+    single_line: "//"
+    begin_multiline: "/*"
+    end_multiline: "*/"
+
   number:
     color: "#0000aa"
 
@@ -160,7 +166,6 @@ Zinc:
         
       operators: 
         - "->"
-        - "//!"
         
     - color: "#087a69"
       keywords:
