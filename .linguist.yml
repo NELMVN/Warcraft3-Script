@@ -160,6 +160,7 @@ Zinc:
         
       operators: 
         - "->"
+        - "//!"
         
     - color: "#087a69"
       keywords:
@@ -177,10 +178,3 @@ Zinc:
       multiline:
         - begin: "$"
           end:   "$"
-          
-    - color: "#960000"
-      keywords:
-        - "//! zinc"
-        - "//! endzinc"
-        - "//! textmacro"
-        - "//! endtextmacro"
