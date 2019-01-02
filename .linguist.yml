@@ -14,11 +14,6 @@ Zinc:
   string:
     color: "#0000aa"
 
-  comment:
-    color: "#008800"
-    begin_multiline: "/*"
-    end_multiline: "*/"
-
   group:
     - color: "#a71d5d"
       keywords:
