@@ -35,19 +35,20 @@ Zinc:
         - "*"
         - "&&"
         - "||"
-        - "="
+        - "=="
+        - "!="
         - "!"
         - "("
         - ")"
         - "{"
         - "}"
+        - ">="
+        - "<="
         - ">"
-        - "<"
+        - ">"
         - "="
         - ";"
-        - "["
-        - "]"
-        
+       
     - color: "#532c8c"
       keywords:
         - "ability"
@@ -163,10 +164,10 @@ Zinc:
         - "module"
         - "function"
         - "constant"
-        
+       
       operators: 
         - "->"
-        
+       
     - color: "#087a69"
       keywords:
         - "while"
@@ -177,8 +178,7 @@ Zinc:
         - "else"
         - "static"
         - "method"
-        - "operator"
-            
+           
     - color: "#968800"
       multiline:
         - begin: "$"
