@@ -1,6 +1,6 @@
-Zinc:
+Jass:
   extensions:
-    - ".zn"
+    - ".j"
 
   default:
     color: "#000000"
@@ -24,8 +24,14 @@ Zinc:
     - color: "#a71d5d"
       keywords:
         - "library"
+        - "endlibrary"
         - "requires"
+        - "needs"
+        - "uses"
         - "optional"
+        - "scope"
+        - "endscope"
+        - "initializer"
        
     - color: "#532c8c"
       keywords:
@@ -73,6 +79,7 @@ Zinc:
         - "itempool"
         - "itemtype"
         - "key"
+        - "keyword"
         - "leaderboard"
         - "lightning"
         - "limitop"
@@ -107,6 +114,7 @@ Zinc:
         - "soundtype"
         - "startlocprio"
         - "string"
+        - "super"
         - "terraindeformation"
         - "texmapflags"
         - "texttag"
@@ -133,15 +141,17 @@ Zinc:
         - "widgetevent"
 
     - color: "#aa5553"
+      keywords:
+        - "and"
+        - "or"
+        - "not"
+        
       operators:
-        - "&&"
-        - "||"
         - "+"
         - "-"
         - "/"
         - "*"
         - "="
-        - "!"
         - "("
         - ")"
         - "{"
@@ -149,38 +159,56 @@ Zinc:
         - ">"
         - "<"
         - "="
-        - ";"
         - "["
         - "]"
-        - "'"
+        - ":"
 
     - color: "#7a0757"
       keywords:
+        - "globals"
+        - "endglobals"
         - "public"
         - "private"
         - "type"
         - "struct"
+        - "endstruct"
         - "extends"
         - "module"
+        - "endmodule"
+        - "implement"
         - "function"
+        - "endfunction"
         - "constant"
-       
-      operators: 
-        - "->"
-       
+        - "takes"
+        - "returns"
+        - "interface"
+        - "endinterface"
+        - "hook"
+
     - color: "#087a69"
       keywords:
-        - "while"
-        - "for"
-        - "break"
+        - "local"
+        - "set"
+        - "call"
+        - "exitwhen"
         - "return"
         - "if"
         - "else"
+        - "endif"
         - "static"
         - "method"
+        - "endmethod"
         - "operator"
+        - "readonly"
+        - "stub"
+        - "delegate"
            
     - color: "#968800"
       multiline:
         - begin: "$"
           end:   "$"
+          
+    - color: "#c4c4c4"
+      keywords:
+        - "debug"
+        - "DEBUG_MODE"
