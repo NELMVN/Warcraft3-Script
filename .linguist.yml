@@ -1,16 +1,18 @@
 Zinc:
   extensions:
     - ".zn"
-    - ".zinc"
+
+  default:
+    color: "#24292e"
 
   identifier:
-    color: "#55B4D4"
-
-  string:
-    color: "#86B300"
+    color: "#7b9c0e"
 
   number:
-    color: "#A37ACC"
+    color: "#745296"
+
+  string:
+    color: "#8B9EB7"
 
   comment:
     color: "#969896"
@@ -19,29 +21,15 @@ Zinc:
     end_multiline: "*/"
 
   group:
-    - color: "#86B300"
-      operators:
-        - "#"
+    - color: "#a71d5d"
       keywords:
         - "include"
+        - "void"
+        - "int"
+        - "float"
 
-    - color: "#FA6E32"
+    - color: "#FF1053"
       keywords:
-        - "Static"
-        - "Function"
-        - "Local"
-        - "Return"
-        - "If"
-        - "Else"
-        - "EndIf"
-
-    - color: "#6E7580"
-      operators:
-        - "@"
-        - "=="
-        - ":="
-        - ":"
-        - "("
-        - ")"
-        - "["
-        - "]"
+        - "printf"
+        - "putchar"
+        - "getchar"
