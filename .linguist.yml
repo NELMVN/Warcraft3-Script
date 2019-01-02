@@ -7,46 +7,19 @@ Zinc:
     - ".zn"
 
   default:
-    - "#000000"
+    color: "#000000"
 
   identifier:
-    - "#348725"
+    color: "#348725"
 
   number:
-    - "#0000aa"
+    color: "#0000aa"
 
   string:
-    - "#0000aa"
+    color: "#0000aa"
 
   comment:
-    - "#008800"
-      single_line:
-        - "//"
-      begin_multiline:
-        - "/*"
-      end_multiline:
-        - "*/"
-    
-vJass:
-  extensions:
-    - ".j"
-  default:
-    - "#000000"
-
-  identifier:
-    - "#348725"
-
-  number:
-    - "#0000aa"
-
-  string:
-    - "#0000aa"
-
-  comment:
-    - "#008800"
-      single_line:
-        - "//"
-      begin_multiline:
-        - "/*"
-      end_multiline:
-        - "*/"
+    color: "#008800"
+    single_line: "//"
+    begin_multiline: "/*"
+    end_multiline: "*/"
