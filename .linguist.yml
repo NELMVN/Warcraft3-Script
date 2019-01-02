@@ -178,3 +178,8 @@ Zinc:
         - "else"
         - "static"
         - "method"
+            
+    - color: "#892525"
+      regexes:
+        - regex: "//!"
+          modifier: ""
