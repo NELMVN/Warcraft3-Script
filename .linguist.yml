@@ -3,19 +3,19 @@ Zinc:
     - ".zn"
 
   default:
-    color: "#24292e"
+    color: "#000000"
 
   identifier:
-    color: "#7b9c0e"
+    color: "#0e9c94"
 
   number:
-    color: "#745296"
+    color: "#0000aa"
 
   string:
-    color: "#8B9EB7"
+    color: "#0000aa"
 
   comment:
-    color: "#969896"
+    color: "#008800"
     single_line: "//"
     begin_multiline: "/*"
     end_multiline: "*/"
@@ -24,14 +24,16 @@ Zinc:
     - color: "#a71d5d"
       keywords:
         - "library"
-        - "{"
-        - "}"
-        - "struct"
-        - "extends"
-        - "module"
+        - "public"
+        - "private"
+        - "function"
+      operators:
+        - "->"
+        - "("
+        - ")"
 
     - color: "#FF1053"
       keywords:
-        - "printf"
-        - "putchar"
-        - "getchar"
+        - "onInit"
+        - "destroy"
+        - "create"
