@@ -23,10 +23,12 @@ Zinc:
   group:
     - color: "#a71d5d"
       keywords:
-        - "include"
-        - "void"
-        - "int"
-        - "float"
+        - "library"
+        - "{"
+        - "}"
+        - "struct"
+        - "extends"
+        - "module"
 
     - color: "#FF1053"
       keywords:
