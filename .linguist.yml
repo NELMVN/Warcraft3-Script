@@ -16,7 +16,6 @@ Zinc:
 
   comment:
     color: "#008800"
-    single_line: "//"
     begin_multiline: "/*"
     end_multiline: "*/"
 
@@ -183,3 +182,8 @@ Zinc:
       multiline:
         - begin: "$"
           end:   "$"
+          
+    - color: "#960000"
+      regexes:
+        - regex: "//!"
+          modifiers: ""
