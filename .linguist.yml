@@ -1,6 +1,6 @@
-Jass:
+Zinc:
   extensions:
-    - ".j"
+    - ".zn"
 
   default:
     color: "#000000"
@@ -24,14 +24,8 @@ Jass:
     - color: "#a71d5d"
       keywords:
         - "library"
-        - "endlibrary"
         - "requires"
-        - "needs"
-        - "uses"
         - "optional"
-        - "scope"
-        - "endscope"
-        - "initializer"
        
     - color: "#532c8c"
       keywords:
@@ -79,7 +73,6 @@ Jass:
         - "itempool"
         - "itemtype"
         - "key"
-        - "keyword"
         - "leaderboard"
         - "lightning"
         - "limitop"
@@ -114,7 +107,6 @@ Jass:
         - "soundtype"
         - "startlocprio"
         - "string"
-        - "super"
         - "terraindeformation"
         - "texmapflags"
         - "texttag"
@@ -141,17 +133,15 @@ Jass:
         - "widgetevent"
 
     - color: "#aa5553"
-      keywords:
-        - "and"
-        - "or"
-        - "not"
-        
       operators:
+        - "&&"
+        - "||"
         - "+"
         - "-"
         - "/"
         - "*"
         - "="
+        - "!"
         - "("
         - ")"
         - "{"
@@ -159,49 +149,36 @@ Jass:
         - ">"
         - "<"
         - "="
+        - ";"
         - "["
         - "]"
-        - ":"
+        - "'"
 
     - color: "#7a0757"
       keywords:
-        - "globals"
-        - "endglobals"
         - "public"
         - "private"
         - "type"
         - "struct"
-        - "endstruct"
         - "extends"
         - "module"
-        - "endmodule"
-        - "implement"
         - "function"
-        - "endfunction"
         - "constant"
-        - "takes"
-        - "returns"
-        - "interface"
-        - "endinterface"
-        - "hook"
-
+       
+      operators: 
+        - "->"
+       
     - color: "#087a69"
       keywords:
-        - "local"
-        - "set"
-        - "call"
-        - "exitwhen"
+        - "while"
+        - "for"
+        - "break"
         - "return"
         - "if"
         - "else"
-        - "endif"
         - "static"
         - "method"
-        - "endmethod"
         - "operator"
-        - "readonly"
-        - "stub"
-        - "delegate"
            
     - color: "#968800"
       multiline:
