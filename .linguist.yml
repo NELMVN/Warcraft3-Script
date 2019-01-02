@@ -1,21 +1,47 @@
 Zinc:
   extensions:
-    - ".zn"
-
-  default:
-    color: "#000000"
+    - ".zc"
+    - ".zinc"
 
   identifier:
-    color: "#348725"
-
-  number:
-    color: "#0000aa"
+    color: "#55B4D4"
 
   string:
-    color: "#0000aa"
+    color: "#86B300"
+
+  number:
+    color: "#A37ACC"
 
   comment:
-    color: "#008800"
+    color: "#969896"
     single_line: "//"
     begin_multiline: "/*"
     end_multiline: "*/"
+
+  group:
+    - color: "#86B300"
+      operators:
+        - "#"
+      keywords:
+        - "include"
+
+    - color: "#FA6E32"
+      keywords:
+        - "Static"
+        - "Function"
+        - "Local"
+        - "Return"
+        - "If"
+        - "Else"
+        - "EndIf"
+
+    - color: "#6E7580"
+      operators:
+        - "@"
+        - "=="
+        - ":="
+        - ":"
+        - "("
+        - ")"
+        - "["
+        - "]"
