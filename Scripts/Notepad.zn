@@ -2,6 +2,8 @@
 library Notepad /*
 ************************************************************************************
 *
+*    API:
+*
 *    struct Notepad extends array
 *
 *        static method create takes string path returns Notepad
@@ -12,8 +14,9 @@ library Notepad /*
 
     requires
         Alloc /* You may choose any Alloc. 
-                e.g Alloc by Sevion
-                    https://www.hiveworkshop.com/threads/snippet-alloc.192348/
+
+                 e.g Alloc by Sevion
+                     https://www.hiveworkshop.com/threads/snippet-alloc.192348/
                */
 
 { public {
