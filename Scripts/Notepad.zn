@@ -37,7 +37,8 @@ library Notepad /*
             }
             
             method close() {
-                PreloadGenEnd(this.path);
+                PreloadGenEnd(this.path + ".txt");
+
                 this.path = null;
                 this.deallocate();
             }
