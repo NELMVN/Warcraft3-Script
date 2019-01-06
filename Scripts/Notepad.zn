@@ -1,0 +1,38 @@
+//! zinc
+library Notepad 
+
+    requires
+        Alloc /* You may choose any Alloc. 
+                e.g Alloc by Sevion
+                    https://www.hiveworkshop.com/threads/snippet-alloc.192348/
+               */
+
+{ public {
+    struct Notepad extends array {
+        module Alloc;
+        private string path;
+        
+        public {
+            static method create( string path ) -> thistype {
+                thistype this = thistype.allocate();
+                this.path = path;
+                
+                PreloadGenClear();
+                PreloadGenStart();
+                
+                return this;
+            }
+            
+            static method write( string content ) {
+                Preload(content);
+            }
+            
+            method close() {
+                PreloadGenEnd(this.path);
+                this.path = null;
+                this.deallocate();
+            }
+        }
+    }
+}}
+//! endzinc
