@@ -1,5 +1,14 @@
 //! zinc
-library Notepad 
+library Notepad /*
+************************************************************************************
+*
+*    struct Notepad extends array
+*
+*        static method create takes string path returns Notepad
+*        static method write takes string content returns nothing
+*        method close takes nothing returns nothing
+*
+***********************************************************************************/
 
     requires
         Alloc /* You may choose any Alloc. 
