@@ -1,5 +1,5 @@
 //! zinc
-library NoSaveGame /* v1.0.0.3
+library NoSaveGame /* v1.0.0.4
 ************************************************************************************
 *
 *    No Save Game
@@ -45,7 +45,7 @@ library NoSaveGame /* v1.0.0.3
             trigger trgStop = CreateTrigger();
             
             TriggerRegisterGameEvent( trgSave, EVENT_GAME_SAVE );
-            TriggerAddAction( trgSave, function() {
+            TriggerAddCondition( trgSave, Condition( function() -> boolean {
                 player pl;
                 
                 if( nsg ) {
@@ -56,7 +56,9 @@ library NoSaveGame /* v1.0.0.3
                     if( nsgDisplayErrMsg ) { SimError( pl, nsgErrMsg ); }
                     pl = null;
                 }
-            });
+                
+                return false;
+            }));
             
             TriggerRegisterTimerExpireEvent( trgStop, TIMER );
             TriggerAddAction( trgStop, function() {
