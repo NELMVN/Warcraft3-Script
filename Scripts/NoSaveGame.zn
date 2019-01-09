@@ -61,9 +61,10 @@ library NoSaveGame /* v1.0.0.4
             }));
             
             TriggerRegisterTimerExpireEvent( trgStop, TIMER );
-            TriggerAddAction( trgStop, function() {
+            TriggerAddCondition( trgStop, Condition( function() -> boolean {
                 if( nsg ) { DialogDisplay( GetLocalPlayer(), DIALOG, false ); }
-            });
+				return false;
+            }));
             
             trgSave = null;
             trgStop = null;
