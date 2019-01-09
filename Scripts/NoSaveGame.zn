@@ -39,15 +39,15 @@ library NoSaveGame /* v1.0.0.4
     private {
         constant dialog DIALOG = DialogCreate();
         constant timer   TIMER = CreateTimer();
-    
+
         module inc { private static method onInit() {
             trigger trgSave = CreateTrigger();
             trigger trgStop = CreateTrigger();
-            
+
             TriggerRegisterGameEvent( trgSave, EVENT_GAME_SAVE );
             TriggerAddCondition( trgSave, Condition( function() -> boolean {
                 player pl;
-                
+
                 if( nsg ) {
                     pl = GetLocalPlayer();
                     DialogDisplay( pl, DIALOG, true );
@@ -56,20 +56,20 @@ library NoSaveGame /* v1.0.0.4
                     if( nsgDisplayErrMsg ) { SimError( pl, nsgErrMsg ); }
                     pl = null;
                 }
-                
+
                 return false;
             }));
-            
+
             TriggerRegisterTimerExpireEvent( trgStop, TIMER );
             TriggerAddCondition( trgStop, Condition( function() -> boolean {
                 if( nsg ) { DialogDisplay( GetLocalPlayer(), DIALOG, false ); }
-				return false;
+                return false;
             }));
-            
+
             trgSave = null;
             trgStop = null;
         }}
-        
+
         struct Z extends array { module inc; }
     }
 }
