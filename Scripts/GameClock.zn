@@ -1,5 +1,5 @@
 //! zinc
-library GameClock { /* v1.0.0.3
+library GameClock { /* v1.0.0.4
 *************************************************************************************
 *
 *    Game Clock
@@ -12,63 +12,71 @@ library GameClock { /* v1.0.0.3
 *   SETTING
 *
 */
-    public {
+    private {
         constant string delimiter = " : ";
     }
 /*
 ************************************************************************************
 *
-*    Functions
+*    struct GameClock extends array
 *
-*        function FormatTime takes real seconds returns string
-*            -   It returns time as hh/mm/ss format.
+*        static method FormatTime takes real seconds return string
+*            - It returns time as hh/mm/ss format.
 *
-*        function GetElapsedTime takes nothing returns real
-*            -   It returns elapsed time.
+*        static method operator ElapsedTime takes nothing returns real
+*            - It returns elapsed time.
 *
-*        function GetElapsedTimeFormatted takes nothing returns string
-*            -   It returns elapsed time as hh/mm/ss format.
+*        static method operator ElapsedTimeEx takes nothing returns string
+*            - It returns elapsed time as hh/mm/ss format.
+*
+*        static method operator Delimiter takes nothing returns string
+*            - It returns GameClock's delimiter.
 *
 ***********************************************************************************/
 
+    //! textmacro GAMECLOCK_TIMEFORMAT takes Time, delimiter
+        if( $Time$ < 10 ) {
+            format = format + "0" + I2S( $Time$ ) $delimiter$;
+        } else {
+            format = format + I2S( $Time$ ) $delimiter$;
+        }
+    //! endtextmacro
+
     private {
         constant timer TIMER = CreateTimer();
- 
-        module inc { private static method onInit() {
-            TimerStart(TIMER, 100000000, true, null);
-        }}
-     
-        struct Z extends array { module inc; }
     }
- 
-    public {
-        function FormatTime( real seconds ) -> string {
-            integer s = R2I(ModuloReal(seconds, 60));
-            integer m = R2I(ModuloReal(seconds, 3600) / 60);
-            integer h = R2I(seconds / 3600);
-            string format = "";
-         
-            //! textmacro GAMECLOCK_TimeFormat takes Time, delimiter
-            if( $Time$ < 10 ) {
-                format = format + "0" + I2S($Time$) $delimiter$;
-            } else {
-                format = format + I2S($Time$) $delimiter$;
+
+    public { struct GameClock [] {
+        public {
+            static method FormatTime( real seconds ) -> string {
+                integer s = R2I( ModuloReal( seconds, 60 ) );
+                integer m = R2I( ModuloReal( seconds, 3600 ) / 60 );
+                integer h = R2I( seconds / 3600 );
+                string format = "";
+
+                //! runtextmacro GAMECLOCK_TIMEFORMAT( "h", "+ delimiter" )
+                //! runtextmacro GAMECLOCK_TIMEFORMAT( "m", "+ delimiter" )
+                //! runtextmacro GAMECLOCK_TIMEFORMAT( "s", "" )
+
+                return format;
             }
-            //! endtextmacro
-            //! runtextmacro GAMECLOCK_TimeFormat("h", "+delimiter")
-            //! runtextmacro GAMECLOCK_TimeFormat("m", "+delimiter")
-            //! runtextmacro GAMECLOCK_TimeFormat("s", "")
-             
-            return format;
+
+            static method operator ElapsedTime() -> real {
+                return TimerGetElapsed( TIMER );
+            }
+
+            static method operator ElapsedTimeEx() -> string {
+                return thistype.FormatTime( TimerGetElapsed(TIMER) );
+            }
+
+            static method operator Delimiter() -> string {
+                return delimiter;
+            }
         }
 
-        function GetElapsedTime() -> real {
-            return TimerGetElapsed(TIMER);
-        }
-
-        function GetElapsedTimeFormatted() -> string {
-            return FormatTime(TimerGetElapsed(TIMER));
-        }
-    }
+        private { static method onInit() {
+            TimerStart( TIMER, 100000000, true, null );
+        }}
+    }}
 }
 //! endzinc
