@@ -1,0 +1,68 @@
+//! zinc
+library TimedEffect /* v1.0.0.0
+*************************************************************************************
+*
+*    TimedEffect
+*        by nel
+*
+*    Allows you to create a Special Effect with duration.
+*
+*************************************************************************************
+*
+*    API:
+*
+*        function AddSpecialEffectTimed takes string modelName, widget targetWidget, string attachPointName, real duration returns nothing
+*
+************************************************************************************/
+
+    requires
+
+        TimerUtils, /* wc3c.net/showthread.php?t=101322 */
+        Alloc       /* You may choose any Alloc. 
+                
+                       e.g Alloc by Sevion
+                           https://www.hiveworkshop.com/threads/snippet-alloc.192348/
+
+                           or
+
+                           Alloc by Nestharus
+                           https://github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Standard/script.j 
+                     */
+
+{
+
+    private {
+        struct TE [] {
+            module Alloc;
+            
+            public {
+                widget targetWidget;
+                effect sfx;
+                timer clock;
+            }
+        }
+        
+        function Stop() {
+            TE this = GetTimerData(GetExpiredTimer());
+            
+            DestroyEffect(this.sfx);
+            ReleaseTimer(this.clock);
+            
+            this.sfx = null;
+            this.clock = null;
+            
+            this.deallocate();
+        }
+    }
+
+    public function AddSpecialEffectTimed( string modelName, widget targetWidget, string attachPointName, real duration ) {
+        TE this = TE.allocate();
+
+        this.sfx = AddSpecialEffectTarget( modelName, this.targetWidget, attachPointName );
+        this.clock = NewTimerEx(this);
+        
+        TimerStart( this.clock, duration, false, function Stop );
+    }
+
+}
+//! endzinc
