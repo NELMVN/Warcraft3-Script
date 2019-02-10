@@ -37,7 +37,6 @@ library TimedEffect /* v1.0.0.1
             module Alloc;
             
             public {
-                widget targetWidget;
                 effect sfx;
                 timer clock;
             }
