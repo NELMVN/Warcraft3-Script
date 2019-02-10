@@ -1,5 +1,5 @@
 //! zinc
-library TimedEffect /* v1.0.0.0
+library TimedEffect /* v1.0.0.1
 *************************************************************************************
 *
 *    TimedEffect
@@ -11,7 +11,9 @@ library TimedEffect /* v1.0.0.0
 *
 *    API:
 *
-*        function AddSpecialEffectTimed takes string modelName, widget targetWidget, string attachPointName, real duration returns nothing
+*       AddSpecialEffectTimed takes string modelName, real x, real y, real duration returns nothing
+*       AddSpecialEffectTargetTimed takes string modelName, widget targetWidget, string attachPointName, real duration returns nothing
+*       AddSpecialEffectLocTimed takes string modelName, location where, real duration returns nothing
 *
 ************************************************************************************/
 
@@ -30,7 +32,6 @@ library TimedEffect /* v1.0.0.0
                      */
 
 {
-
     private {
         struct TE [] {
             module Alloc;
@@ -55,14 +56,33 @@ library TimedEffect /* v1.0.0.0
         }
     }
 
-    public function AddSpecialEffectTimed( string modelName, widget targetWidget, string attachPointName, real duration ) {
-        TE this = TE.allocate();
-
-        this.sfx = AddSpecialEffectTarget( modelName, this.targetWidget, attachPointName );
-        this.clock = NewTimerEx(this);
+    public {
+        function AddSpecialEffectTimed( string modelName, real x, real y, real duration ) {
+            TE this = TE.allocate();
+            
+            this.sfx = AddSpecialEffect(modelName, x, y);
+            this.clock = NewTimerEx(this);
+            
+            TimerStart(this.clock, duration, false, function Stop);
+        }
         
-        TimerStart( this.clock, duration, false, function Stop );
-    }
-
+        function AddSpecialEffectTargetTimed( string modelName, widget targetWidget, string attachPointName, real duration ) {
+            TE this = TE.allocate();
+            
+            this.sfx = AddSpecialEffectTarget(modelName, targetWidget, attachPointName);
+            this.clock = NewTimerEx(this);
+            
+            TimerStart(this.clock, duration, false, function Stop);
+        }
+        
+        function AddSpecialEffectLocTimed( string modelName, location where, real duration ) {
+            TE this = TE.allocate();
+            
+            this.sfx = AddSpecialEffectLoc(modelName, where);
+            this.clock = NewTimerEx(this);
+            
+            TimerStart(this.clock, duration, false, function Stop);
+        }
+    }    
 }
 //! endzinc
