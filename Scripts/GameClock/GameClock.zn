@@ -1,5 +1,5 @@
 //! zinc
-library GameClock { /* v1.0.0.4
+library GameClock { /* v1.0.0.5
 *************************************************************************************
 *
 *    Game Clock
@@ -12,9 +12,8 @@ library GameClock { /* v1.0.0.4
 *   SETTING
 *
 */
-    private {
-        constant string delimiter = " : ";
-    }
+    private constant string DELIMITER = " : "; /* It used to seperate the hour,
+                                                  minute, and second */
 /*
 ************************************************************************************
 *
@@ -32,7 +31,13 @@ library GameClock { /* v1.0.0.4
 *        static method operator Delimiter takes nothing returns string
 *            - It returns GameClock's delimiter.
 *
-***********************************************************************************/
+*************************************************************************************
+*
+*    Issue:
+*
+*       This library will not give you an exact current elapsed time.
+*
+************************************************************************************/
 
     //! textmacro GAMECLOCK_TIMEFORMAT takes Time, delimiter
         if( $Time$ < 10 ) {
@@ -42,9 +47,7 @@ library GameClock { /* v1.0.0.4
         }
     //! endtextmacro
 
-    private {
-        constant timer TIMER = CreateTimer();
-    }
+    constant timer TIMER = CreateTimer();
 
     public { struct GameClock [] {
         public {
@@ -54,8 +57,8 @@ library GameClock { /* v1.0.0.4
                 integer h = R2I( seconds / 3600 );
                 string format = "";
 
-                //! runtextmacro GAMECLOCK_TIMEFORMAT( "h", "+ delimiter" )
-                //! runtextmacro GAMECLOCK_TIMEFORMAT( "m", "+ delimiter" )
+                //! runtextmacro GAMECLOCK_TIMEFORMAT( "h", "+ DELIMITER" )
+                //! runtextmacro GAMECLOCK_TIMEFORMAT( "m", "+ DELIMITER" )
                 //! runtextmacro GAMECLOCK_TIMEFORMAT( "s", "" )
 
                 return format;
@@ -70,7 +73,7 @@ library GameClock { /* v1.0.0.4
             }
 
             static method operator Delimiter() -> string {
-                return delimiter;
+                return DELIMITER;
             }
         }
 
