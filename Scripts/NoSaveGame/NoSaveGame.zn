@@ -1,5 +1,5 @@
 //! zinc
-library NoSaveGame /* v1.0.0.4
+library NoSaveGame  /* v1.0.0.5
 ************************************************************************************
 *
 *    No Save Game
@@ -12,65 +12,119 @@ library NoSaveGame /* v1.0.0.4
 
        requires
 
-           SimError /* http://www.wc3c.net/showthread.php?t=101260 */
+           optional SimError,         /* http://www.wc3c.net/showthread.php?t=101260 */
+           optional RegisterGameEvent /* https://www.hiveworkshop.com/threads/snippet-registerevent-pack.250266/ */
 
 
 /***********************************************************************************
 *
+*   SETTINGS
 *
-*    boolean nsg
-*       - Set false, to allow to all players to use Save Game.
-*
-*    string nsgErrMsg
-*       - Error Message
-*
-*    boolean nsgDisplayErrMsg
-*       - Set false, if you don't want to show the Error Message in-game.
-*
-*
-***********************************************************************************/
+*/
 {
-    public {    
+    public {
+        /*
+        *    It's a content of the error message.
+        */
         string  nsgErrMsg = "You are not allowed to use Save Game.";
+
+        /*
+        *    Toggleable Error Message.
+        */
         boolean nsgDisplayErrMsg = true;
+
+        /*
+        *    Toggleable NoSaveGame.
+        */
         boolean nsg = true;
     }
 
+/*
+***********************************************************************************/
+
     private {
         constant dialog DIALOG = DialogCreate();
-        constant timer   TIMER = CreateTimer();
+        constant timer TIMER = CreateTimer();
 
-        module inc { private static method onInit() {
-            trigger trgSave = CreateTrigger();
-            trigger trgStop = CreateTrigger();
+        struct NoSaveGame [] { private static method onInit() {
+            trigger Stop = CreateTrigger();
 
-            TriggerRegisterGameEvent( trgSave, EVENT_GAME_SAVE );
-            TriggerAddCondition( trgSave, Condition( function() -> boolean {
-                player pl;
+            static if( LIBRARY_RegisterGameEvent ) {
+                RegisterGameEvent(EVENT_GAME_SAVE, function() {
+                    player pl;
 
-                if( nsg ) {
-                    pl = GetLocalPlayer();
-                    DialogDisplay( pl, DIALOG, true );
-                    TimerStart( TIMER, 0, false, null);
-                    
-                    if( nsgDisplayErrMsg ) { SimError( pl, nsgErrMsg ); }
-                    pl = null;
-                }
+                    if( nsg ) {
+                        pl = GetLocalPlayer();
+                        
+                        DialogDisplay(pl, DIALOG, true);
+                        TimerStart(TIMER, 0, false, null);
 
-                return false;
-            }));
+                        static if( LIBRARY_SimError ) {
+                            SimError(pl, nsgErrMsg);
+                        } else {
+                            DisplayTimedTextToPlayer(pl, 0.52, 0.96, 2.00, 
+                                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                "|cffffcc00" + nsgErrMsg + "|r" 
+                            );
+                        }
 
-            TriggerRegisterTimerExpireEvent( trgStop, TIMER );
-            TriggerAddCondition( trgStop, Condition( function() -> boolean {
-                if( nsg ) { DialogDisplay( GetLocalPlayer(), DIALOG, false ); }
-                return false;
-            }));
+                        pl = null;
+                    }
+                });
 
-            trgSave = null;
-            trgStop = null;
+                TriggerRegisterTimerExpireEvent(Stop, TIMER);
+                TriggerAddCondition(Stop, Condition(function() -> boolean {
+                    if( nsg ) { 
+                        DialogDisplay(GetLocalPlayer(), DIALOG, false);
+                    }
+
+                    return false;
+                }));
+
+                Stop = null;
+            } else {
+                trigger Save = CreateTrigger();
+
+                TriggerRegisterGameEvent(Save, EVENT_GAME_SAVE);
+                TriggerAddCondition(Save, Condition(function() -> boolean {
+                    player pl;
+
+                    if( nsg ) {
+                        pl = GetLocalPlayer();
+
+                        DialogDisplay(pl, DIALOG, true);
+                        TimerStart(TIMER, 0, false, null);
+
+                        if( nsgDisplayErrMsg ) {
+                            static if( LIBRARY_SimError ) {
+                                SimError(pl, nsgErrMsg);
+                            } else {
+                                DisplayTimedTextToPlayer(pl, 0.52, 0.96, 2.00, 
+                                    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                    "|cffffcc00" + nsgErrMsg + "|r" 
+                                );
+                            }
+                        }
+
+                        pl = null;
+                    }
+
+                    return false;
+                }));
+
+                TriggerRegisterTimerExpireEvent(Stop, TIMER);
+                TriggerAddCondition(Stop, Condition(function() -> boolean {
+                    if( nsg ) { 
+                        DialogDisplay(GetLocalPlayer(), DIALOG, false);
+                    }
+
+                    return false;
+                }));
+
+                Save = null;
+                Stop = null;
+            }
         }}
-
-        struct Z extends array { module inc; }
     }
 }
 //! endzinc
