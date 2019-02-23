@@ -1,5 +1,5 @@
 //! zinc
-library GameClock { /* v1.0.0.5
+library GameClock { /* v1.0.0.6
 *************************************************************************************
 *
 *    Game Clock
@@ -47,7 +47,7 @@ library GameClock { /* v1.0.0.5
         }
     //! endtextmacro
 
-    constant timer TIMER = CreateTimer();
+    private constant timer TIMER = CreateTimer();
 
     public { struct GameClock [] {
         public {
