@@ -1,7 +1,7 @@
 library CreepRespawn /* v1.0.0.0
 *************************************************************************************
 *
-*   It is used to spawn a creeps and useful for the RPG map.
+*   It is used to spawn a dying creeps.
 *
 *************************************************************************************
 *
