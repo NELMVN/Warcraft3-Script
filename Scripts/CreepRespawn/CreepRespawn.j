@@ -38,10 +38,10 @@ library CreepRespawn /* v1.0.0.0
         
         private unit Creep
         private integer key
-        private timer Timer
         
         private static method onRevive takes nothing returns nothing
-            local thistype this = GetTimerData(GetExpiredTimer())
+			local timer Timer = GetExpiredTimer()
+            local thistype this = GetTimerData(Timer)
             local unit Creep
 
             call DestroyEffect(AddSpecialEffect(                            /*
@@ -59,12 +59,12 @@ library CreepRespawn /* v1.0.0.0
             
             call SetUnitUserData(Creep, this.key)
             call RemoveUnit(this.Creep)
-            call ReleaseTimer(this.Timer)
+            call ReleaseTimer(Timer)
 
             set Creep = null
+			set Timer = null
             set this.Creep = null
             set this.key = 0
-            set this.Timer = null
             
             call this.deallocate()
         endmethod
@@ -79,7 +79,6 @@ library CreepRespawn /* v1.0.0.0
                 
                 set this.Creep = Creep
                 set this.key = GetUnitUserData(this.Creep)
-                set this.Timer = NewTimerEx(this)
                 
                 if IsUnitType(Creep, CREEP_TYPE_BOSS) then
                     set Duration = CREEP_BOSS
@@ -87,7 +86,7 @@ library CreepRespawn /* v1.0.0.0
                     set Duration = CREEP_REGULAR
                 endif
                 
-                call TimerStart(this.Timer, Duration, false,                /*
+                call TimerStart(NewTimerEx(this), Duration, false,                /*
                 */     function thistype.onRevive                           /*
                 */ )
             endif
@@ -99,7 +98,7 @@ library CreepRespawn /* v1.0.0.0
             local unit FoG
             local integer key = 0
 
-            call GroupEnumUnitsInRect(Iterator, bj_mapInitialPlayableArea, null)
+            call GroupEnumUnitsOfPlayer(Iterator, PLAYER, null)
 
             loop
                 set FoG = FirstOfGroup(Iterator)
