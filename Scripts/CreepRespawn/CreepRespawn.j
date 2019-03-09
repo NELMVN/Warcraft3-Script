@@ -1,14 +1,14 @@
 library CreepRespawn /* v1.0.0.0
 *************************************************************************************
 *
-*   It is used to spawn a dying creep.
+*   It is used to spawn a creeps and useful for the RPG map.
 *
 *************************************************************************************
 *
 *   */ needs /*
 *
-*       */ Table,                          /*      hiveworkshop.com/threads/snippet-new-table.188084/
-*       */ TimerUtils,                     /*      wc3c.net/showthread.php?t=101322
+*       */ Table                           /*      hiveworkshop.com/threads/snippet-new-table.188084/
+*       */ TimerUtils                      /*      wc3c.net/showthread.php?t=101322
 *       */ RegisterPlayerUnitEvent         /*      hiveworkshop.com/threads/snippet-registerevent-pack.250266/
 *       */ AllocT                          /*      github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Table/script.j
 *
