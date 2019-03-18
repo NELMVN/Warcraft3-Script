@@ -1,5 +1,5 @@
 //! zinc
-library TimedEffect /* v1.0.0.1
+library TimedEffect /* v1.0.0.2
 *************************************************************************************
 *
 *    TimedEffect
@@ -35,52 +35,39 @@ library TimedEffect /* v1.0.0.1
     private {
         struct TE [] {
             module Alloc;
-            
-            public {
-                effect sfx;
-                timer clock;
-            }
+            public effect sfx;
         }
         
         function Stop() {
-            TE this = GetTimerData(GetExpiredTimer());
+            timer Timer = GetExpiredTimer();
+            TE this = GetTimerData(Timer);
             
             DestroyEffect(this.sfx);
-            ReleaseTimer(this.clock);
+            ReleaseTimer(Timer);
             
             this.sfx = null;
-            this.clock = null;
-            
             this.deallocate();
+            Timer = null;
         }
     }
 
     public {
         function AddSpecialEffectTimed( string modelName, real x, real y, real duration ) {
             TE this = TE.allocate();
-            
             this.sfx = AddSpecialEffect(modelName, x, y);
-            this.clock = NewTimerEx(this);
-            
-            TimerStart(this.clock, duration, false, function Stop);
+            TimerStart(NewTimerEx(this), duration, false, function Stop);
         }
         
         function AddSpecialEffectTargetTimed( string modelName, widget targetWidget, string attachPointName, real duration ) {
             TE this = TE.allocate();
-            
             this.sfx = AddSpecialEffectTarget(modelName, targetWidget, attachPointName);
-            this.clock = NewTimerEx(this);
-            
-            TimerStart(this.clock, duration, false, function Stop);
+            TimerStart(NewTimerEx(this), duration, false, function Stop);
         }
         
         function AddSpecialEffectLocTimed( string modelName, location where, real duration ) {
             TE this = TE.allocate();
-            
             this.sfx = AddSpecialEffectLoc(modelName, where);
-            this.clock = NewTimerEx(this);
-            
-            TimerStart(this.clock, duration, false, function Stop);
+            TimerStart(NewTimerEx(this), duration, false, function Stop);
         }
     }    
 }
