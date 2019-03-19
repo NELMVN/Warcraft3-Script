@@ -1,13 +1,13 @@
 //! zinc
-library htmlFile { /* v1.0.0.1
+library htmlFile { /* v1.0.0.0
 *************************************************************************************
 *
 *   .htmlFile
 *      by nel (NELMVN)
 *
-*   A lightweight library that allows you to create, write, and design your own 
+*   A lightweight library that allows you to create, write, and design your own
 *   HTML file. It is more faster than .bat to .txt conversion and compatible in
-*   Internet Explorer, Google Chrome, Avast Secure Browser, Mozilla Firefox, 
+*   Internet Explorer, Google Chrome, Avast Secure Browser, Mozilla Firefox,
 *   etc.
 *
 ************************************************************************************
@@ -33,21 +33,20 @@ library htmlFile { /* v1.0.0.1
 *
 ***********************************************************************************/
 
-    public struct HTML[] { 
+    public struct HTML[] {
         private static string Directory;
 
         public {
             static method new( string directory, real fontSize ) {
                 PreloadGenClear();
                 PreloadGenStart();
-                
-                debug if( directory == null ) { 
-                    debug BJDebugMsg("[HTML Error new()] directory is a null."); 
+             
+                debug if( directory == null ) {
+                    debug BJDebugMsg("[HTML Error new()] directory is a null.");
                 }
 
-                Preload("<!DOCTYPE html><meta charset=\"UTF-8\"><!--");
                 Preload(
-                    "--><html><body class=\"x\">" + 
+                    "<html><body class=\"x\">" +
                     "<style>.x { font-size: 0; }" +
                     ".y { font-size: " + R2S(fontSize) + "; }</style>" +
                     "<div class=\"y\"><!--"
@@ -55,22 +54,22 @@ library htmlFile { /* v1.0.0.1
 
                 thistype.Directory = directory;
             }
-
+         
             static method print( string str ) {
                 Preload("-->" + str +"<!--");
-                
-                debug if( StringLength(str) > 252 ) { 
-                    debug BJDebugMsg("[HTML Error print()] str reached the limit."); 
+             
+                debug if( StringLength(str) > 252 ) {
+                    debug BJDebugMsg("[HTML Error print()] str reached the limit.");
                 }
             }
 
             static method println( string str ) {
                 Preload("-->" + str +"<br><!--");
 
-                debug if( StringLength(str) > 248 ) { 
-                    debug BJDebugMsg("[HTML Error println()] str reached the limit."); 
+                debug if( StringLength(str) > 248 ) {
+                    debug BJDebugMsg("[HTML Error println()] str reached the limit.");
                 }
-
+         
             }
             static method end() {
                 Preload("--></div></body></html><!--" +
