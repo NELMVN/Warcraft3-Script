@@ -1,10 +1,10 @@
 //! zinc
-library Notepad /* v1.0.0.1
+library Notepad /* v1.0.0.2
 ************************************************************************************
 *
 *    struct Notepad extends array
 *
-*        static method create takes string path returns Notepad
+*        static method construct takes string path returns nothing
 *        static method write takes string content returns nothing
 *        method close takes nothing returns nothing
 *
@@ -16,32 +16,16 @@ library Notepad /* v1.0.0.1
 *
 ***********************************************************************************/
 
-    requires
-        Alloc /* You may choose any Alloc. 
-                
-                 e.g Alloc by Sevion
-                     https://www.hiveworkshop.com/threads/snippet-alloc.192348/
-
-                     or
-
-                     Alloc by Nestharus
-                     https://github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Standard/script.j 
-               */
-
 { public {
-    struct Notepad [] {
-        module Alloc;
-        private string directory;
+    struct Notepad[] {
+        private static string directory;
 
         public {
-            static method create( string directory ) -> thistype {
-                thistype this = thistype.allocate();
-                this.directory = directory;
+            static method construct( string directory ) {
+                thistype.directory = directory;
 
                 PreloadGenClear();
                 PreloadGenStart();
-                
-                return this;
             }
 
             static method write( string content ) {
@@ -49,10 +33,7 @@ library Notepad /* v1.0.0.1
             }
 
             method close() {
-                PreloadGenEnd(this.directory);
-
-                this.directory = null;
-                this.deallocate();
+                PreloadGenEnd(this.directory + ".txt");
             }
         }
     }
