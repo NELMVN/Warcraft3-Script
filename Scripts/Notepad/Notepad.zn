@@ -33,7 +33,8 @@ library Notepad /* v1.0.0.2
             }
 
             method close() {
-                PreloadGenEnd(this.directory + ".txt");
+                PreloadGenEnd(thistype.directory + ".txt");
+                thistype.directory = null;
             }
         }
     }
