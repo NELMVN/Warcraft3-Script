@@ -1,5 +1,5 @@
 //! zinc
-library GameClock { /* v1.0.0.6
+library GameClock { /* v1.0.0.7
 *************************************************************************************
 *
 *    Game Clock
@@ -77,9 +77,9 @@ library GameClock { /* v1.0.0.6
             }
         }
 
-        private { static method onInit() {
+        private static method onInit() {
             TimerStart( TIMER, 100000000, true, null );
-        }}
+        }
     }}
 }
 //! endzinc
