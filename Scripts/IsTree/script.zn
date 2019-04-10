@@ -1,18 +1,26 @@
 //! zinc
-library IsTree {
-    private unit Dummy = CreateUnit(
-        Player(PLAYER_NEUTRAL_PASSIVE), 'hpea', 0, 0, 0
-    );
-    
+library IsTree { /*
+************************************************************************************
+*
+*    function IsTree takes whichDestructible return boolean
+*
+***********************************************************************************/
+
     public function IsTree(destructable whichDestructible) -> boolean {
         return 
             IssueTargetOrderById(Dummy, 852185, whichDestructible) &&
             IssueImmediateOrderById(Dummy, 851972);
     }
 
-    private function onInit() {
-        UnitAddAbility(Dummy, 'Aloc');
-        ShowUnit(Dummy, false);
+    private {
+		unit Dummy = CreateUnit(
+			Player(PLAYER_NEUTRAL_PASSIVE), 'hpea', 0, 0, 0
+		);
+
+		function onInit() {
+			UnitAddAbility(Dummy, 'Aloc');
+			ShowUnit(Dummy, false);
+		}
     }
 }
 //! endzinc
