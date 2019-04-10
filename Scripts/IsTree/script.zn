@@ -13,14 +13,14 @@ library IsTree { /*
     }
 
     private {
-		unit Dummy = CreateUnit(
-			Player(PLAYER_NEUTRAL_PASSIVE), 'hpea', 0, 0, 0
-		);
+        unit Dummy = CreateUnit(
+            Player(PLAYER_NEUTRAL_PASSIVE), 'hpea', 0, 0, 0
+        );
 
-		function onInit() {
-			UnitAddAbility(Dummy, 'Aloc');
-			ShowUnit(Dummy, false);
-		}
+        function onInit() {
+            UnitAddAbility(Dummy, 'Aloc');
+            ShowUnit(Dummy, false);
+        }
     }
 }
 //! endzinc
