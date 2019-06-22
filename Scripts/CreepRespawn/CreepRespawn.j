@@ -111,10 +111,8 @@ library CreepRespawn /* v1.0.0.2
             /*
             *    Revive Effect
             */
-            call DestroyEffect(AddSpecialEffect(                            /*
-            */     REVIVE_EFFECT, GetUnitX(Creep), GetUnitY(Creep)          /*
-            */ ))
-            
+            call DestroyEffect(AddSpecialEffect(REVIVE_EFFECT, GetUnitX(Creep), GetUnitY(Creep)))
+
             /*
             *    Remove corpse
             */
@@ -122,7 +120,7 @@ library CreepRespawn /* v1.0.0.2
                 call RemoveUnit(this.unit)
                 set this.unit = null
             endif
-            
+
             /*
             *    Remove Timer
             */
@@ -169,9 +167,7 @@ library CreepRespawn /* v1.0.0.2
                     set Duration = CREEP_REGULAR_DURATION
                 endif
 
-                call TimerStart(NewTimerEx(this), Duration, false,          /*
-                */     function thistype.onRevive                           /*
-                */ )
+                call TimerStart(NewTimerEx(this), Duration, false, function thistype.onRevive)
             debug else
                 debug call BJDebugMsg(GetUnitName(u) + " >> false ")
             endif
@@ -217,9 +213,7 @@ library CreepRespawn /* v1.0.0.2
             /*
             *    Enumerate all of Player Creep's units
             */
-            call GroupEnumUnitsOfPlayer(Iterator, PLAYER, Filter(           /*
-            */     function thistype.enumGroup                              /*
-            */ ))
+            call GroupEnumUnitsOfPlayer(Iterator, PLAYER, Filter(function thistype.enumGroup))
 
             /*
             *    Remove memory leaks
@@ -234,18 +228,12 @@ library CreepRespawn /* v1.0.0.2
             *    Init Death Event
             */
             static if LIBRARY_RegisterAnyPlayerUnitEvent then
-                call RegisterPlayerUnitEvent(PLAYER,                        /*
-                */     EVENT_PLAYER_UNIT_DEATH, function thistype.onDeath   /*
-                */ )
+                call RegisterPlayerUnitEvent(PLAYER, EVENT_PLAYER_UNIT_DEATH, function thistype.onDeath)
             else
                 local trigger trg = CreateTrigger()
 
-                call TriggerRegisterPlayerUnitEvent(trg, PLAYER,            /*
-                */     EVENT_PLAYER_UNIT_DEATH, null                        /*
-                */ )
-                call TriggerAddCondition(trg, Condition(                    /*
-                */     function thistype.onDeath                            /*
-                */ ))
+                call TriggerRegisterPlayerUnitEvent(trg, PLAYER, EVENT_PLAYER_UNIT_DEATH, null )
+                call TriggerAddCondition(trg, Condition(function thistype.onDeath))
 
                 set trg = null
             endif
