@@ -1,74 +1,41 @@
 //! zinc
-library TimedEffect /* v1.0.0.2
-*************************************************************************************
+library TimedEffect /* v2.0.0.0 | Copyright © github.com/nelmvn
+************************************************************************************
 *
-*    TimedEffect
-*        by nel
-*
-*    Allows you to create a Special Effect with duration.
-*
-*************************************************************************************
-*
-*    API:
-*
-*       AddSpecialEffectTimed takes string modelName, real x, real y, real duration returns nothing
-*       AddSpecialEffectTargetTimed takes string modelName, widget targetWidget, string attachPointName, real duration returns nothing
-*       AddSpecialEffectLocTimed takes string modelName, location where, real duration returns nothing
+*    struct TimedEffect extends array
+*       static method Apply takes effect whichEffect, real Duration returns nothing
 *
 ************************************************************************************/
 
-    requires
-
-        TimerUtils, /* wc3c.net/showthread.php?t=101322 */
-        Alloc       /* You may choose any Alloc. 
-                
-                       e.g Alloc by Sevion
-                           https://www.hiveworkshop.com/threads/snippet-alloc.192348/
-
-                           or
-
-                           Alloc by Nestharus
-                           https://github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Standard/script.j 
-                     */
+    requires 
+    
+        Alloc,      /* https://github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Standard/script.j */
+        TimerUtils  /* http://wc3c.net/showthread.php?t=101322 */
 
 {
-    private {
-        struct TE [] {
-            module Alloc;
-            public effect sfx;
-        }
-        
-        function Stop() {
-            timer Timer = GetExpiredTimer();
-            TE this = GetTimerData(Timer);
-            
-            DestroyEffect(this.sfx);
-            ReleaseTimer(Timer);
-            
-            this.sfx = null;
-            this.deallocate();
-            Timer = null;
+    public struct TimedEffect[] {
+        module Alloc;
+        private effect effect;
+
+        public static method Apply (effect whichEffect, real Duration) -> effect {
+            thistype this = thistype.allocate();
+            this.effect = whichEffect;
+
+            TimerStart(NewTimerEx(this), Duration, false, function() {
+                timer Clock = GetExpiredTimer();
+                thistype this = GetTimerData(Clock);
+
+                DestroyEffect(this.effect);
+                this.effect = null;
+
+                ReleaseTimer(Clock);
+                this.deallocate();
+
+                Clock = null;
+            });
+
+            return this.effect;
         }
     }
-
-    public {
-        function AddSpecialEffectTimed( string modelName, real x, real y, real duration ) {
-            TE this = TE.allocate();
-            this.sfx = AddSpecialEffect(modelName, x, y);
-            TimerStart(NewTimerEx(this), duration, false, function Stop);
-        }
-        
-        function AddSpecialEffectTargetTimed( string modelName, widget targetWidget, string attachPointName, real duration ) {
-            TE this = TE.allocate();
-            this.sfx = AddSpecialEffectTarget(modelName, targetWidget, attachPointName);
-            TimerStart(NewTimerEx(this), duration, false, function Stop);
-        }
-        
-        function AddSpecialEffectLocTimed( string modelName, location where, real duration ) {
-            TE this = TE.allocate();
-            this.sfx = AddSpecialEffectLoc(modelName, where);
-            TimerStart(NewTimerEx(this), duration, false, function Stop);
-        }
-    }    
 }
 //! endzinc
