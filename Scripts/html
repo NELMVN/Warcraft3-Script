@@ -1,0 +1,17 @@
+//! zinc
+library html { public {
+   // Init HTML
+   function InitHTML() {
+      PreloadGenClear();
+      PreloadGenStart();
+      // Hide all excess generated texts.
+      Preload("<style>body{visibility:hidden;margin-top:-10px;}.a{visibility:visible!important;}</style><!--");
+   }
+   // <div class='a'>[Your HTML Code]</div>
+   function InsertHTML(string element) { Preload("-->" + element + "<!--"); }
+   function EndHTML(string filename) {
+      // Blizzard disabled all extension files except .txt and .pld
+      PreloadGenEnd(filename + ".pld");
+   }
+}}
+//! endzinc
