@@ -1,0 +1,36 @@
+//! zinc
+library html { public { /* github.com/nelmvn
+*************************************************************************************
+*
+*    This script is used for webpage purposes, but it requires .pld to .html
+*    convertion.
+*
+************************************************************************************
+*
+*   API:
+*
+*    function InitHTML      takes nothing returns nothing
+*    function InsertHTML    takes string element returns nothing
+*    function EndHTML       takes string filename returns nothing
+*
+************************************************************************************
+*/
+    function InitHTML() {
+        // Init Preload
+        PreloadGenClear();
+        PreloadGenStart();
+
+        // Hide all excess generated texts.
+        Preload("<style>body{visibility:hidden;margin-top:-10px;}.root{visibility:visible!important;}</style><!--");
+    }
+
+    function InsertHTML(string element) {
+        Preload("-->" + element + "<!--");
+    }
+
+    function EndHTML(string filename) {
+        // You may only use .txt and .pld
+        PreloadGenEnd(filename + ".pld");
+    }
+}}
+//! endzinc
