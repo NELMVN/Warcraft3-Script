@@ -3,7 +3,7 @@ library html { public { /* github.com/nelmvn
 *************************************************************************************
 *
 *    This script is used for webpage purposes, but it requires .pld to .html
-*    convertion.
+*    convertion
 *
 ************************************************************************************
 *
@@ -13,6 +13,8 @@ library html { public { /* github.com/nelmvn
 *    function InsertHTML    takes string element returns nothing
 *    function EndHTML       takes string filename returns nothing
 *
+*    function InsertCSSJS   takes string cssjs returns nothing
+*
 ************************************************************************************
 */
     function InitHTML() {
@@ -21,7 +23,7 @@ library html { public { /* github.com/nelmvn
         PreloadGenStart();
 
         // Hide all excess generated texts.
-        Preload("<style>body{visibility:hidden;margin-top:-10px;}.root{visibility:visible!important;}</style><!--");
+        Preload("<style>body{visibility:hidden;margin-top:-10px;}#root{visibility:visible!important;}</style><!--");
     }
 
     function InsertHTML(string element) {
@@ -31,6 +33,10 @@ library html { public { /* github.com/nelmvn
     function EndHTML(string filename) {
         // You may only use .txt and .pld
         PreloadGenEnd(filename + ".pld");
+    }
+
+    function InsertCSSJS(string cssjs) {
+        Preload("*/" + cssjs + "/*");
     }
 }}
 //! endzinc
