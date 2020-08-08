@@ -1,32 +1,26 @@
 //! zinc
-library NoSaveGame  /* v1.0.0.5
+library NoSaveGame /* github.com/nelmvn
+*************************************************************************************
+*
+*    */ requires /*
+*
+*        */ optional SimError,         /* http://www.wc3c.net/showthread.php?t=101260
+*        */ optional RegisterGameEvent /* https://www.hiveworkshop.com/threads/snippet-registerevent-pack.250266/
+*
+*************************************************************************************
+*
+*    It prevents using Save Game in-game.
+*
 ************************************************************************************
 *
-*    No Save Game
-*        by nel
-*
-*       It prevents to use Save Game function to all players.
-*
-***********************************************************************************/
-
-
-       requires
-
-           optional SimError,         /* http://www.wc3c.net/showthread.php?t=101260 */
-           optional RegisterGameEvent /* https://www.hiveworkshop.com/threads/snippet-registerevent-pack.250266/ */
-
-
-/***********************************************************************************
-*
-*   SETTINGS
+*   Configuration
 *
 */
-{
-    public {
+    { public {
         /*
-        *    It's a content of the error message.
+        *    Error Message.
         */
-        string  nsgErrMsg = "You are not allowed to use Save Game.";
+        string  nsgErrMsg = "You are unauthorized to access this function.";
 
         /*
         *    Toggleable Error Message.
@@ -38,7 +32,6 @@ library NoSaveGame  /* v1.0.0.5
         */
         boolean nsg = true;
     }
-
 /*
 ***********************************************************************************/
 
