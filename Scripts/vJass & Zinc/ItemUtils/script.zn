@@ -1,0 +1,89 @@
+//! zinc
+library ItemUtils { /* v1.0 | fugatsu.freeforums.net
+************************************************************************************
+*
+*    function IsItemExists takes unit whichUnit, integer whichItemType returns boolean
+*    function IsItemClassificationExists takes unit whichUnit, integer whichItemType, itemtype whichClassification returns boolean
+*    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns nothing
+*
+************************************************************************************/
+
+    public {
+        function IsItemExists(
+            unit    whichUnit,
+            integer whichItemType
+        ) -> boolean {
+
+            integer Index = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (
+                    thisItem != null &&
+                    GetItemTypeId(thisItem) == whichItemType
+                ) {
+                    thisItem = null;
+                    return true;
+                }
+
+                Index = Index + 1;
+            }
+
+            return false;
+
+        }
+
+        function IsItemClassificationExists(
+            unit     whichUnit,
+            itemtype whichItemClassification,
+            item     exceptThisItem
+        ) -> item {
+
+            integer Index = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (
+                    thisItem != null &&
+                    thisItem != exceptThisItem &&
+                    GetItemType(thisItem) == whichItemClassification
+                ) {
+                    thisItem = null;
+                    return true;
+                }
+
+                Index = Index + 1;
+            }
+
+            return false;
+
+        }
+
+        function RemoveExistingItem(
+            unit    whichUnit,
+            integer whichItemType
+        ) {
+
+            integer Index = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (thisItem != null && GetItemTypeId(thisItem) == whichItemType) {
+                    RemoveItem(thisItem);
+                    thisItem = null;
+
+                    return;
+                }
+
+                Index = Index + 1;
+            }
+        }
+    }
+}
+//! endzinc
