@@ -1,0 +1,25 @@
+//! zinc
+library UserUtils /* fugatsu.freeforums.net
+************************************************************************************
+*
+*    function UserSetCameraToUnit takes player whichUser, unit whichUnit returns player
+*
+************************************************************************************/
+
+{ public {
+    function UserSetCameraToUnit -> player (
+        player whichUser,
+        unit   whichUnit
+    ) {
+        // Move Camera to specific location.
+        if (GetLocalPlayer() == whichUser) {
+            PanCameraToTimed(GetUnitX(whichUnit), GetUnitY(whichUnit), 0);
+
+            ClearSelection();
+            SelectUnit(whichUnit, true);
+        }
+
+        return whichUser;
+    }
+}}
+//! endzinc
