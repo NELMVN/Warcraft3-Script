@@ -1,10 +1,28 @@
 //! zinc
-library ItemUtils { /* v1.0 | fugatsu.freeforums.net
+library ItemUtils { /* v2.0.0.0 | fugatsu.freeforums.net
+************************************************************************************
+*
+*    Much faster than BJ functions.
+*
 ************************************************************************************
 *
 *    function IsItemExists takes unit whichUnit, integer whichItemType returns boolean
+*       - Find specific item type.
+*
+*    function IsItemExistsEx takes unit whichUnit, integer whichItemType returns integer
+*       - Find specific item type then count how many.
+*
 *    function IsItemClassificationExists takes unit whichUnit, integer whichItemType, itemtype whichClassification returns boolean
+*       - Find specific item classification.
+*
 *    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns nothing
+*       - Similar to RemoveItem(), but it removes specific item type.
+*
+*    function RemoveExistingItemByCharges takes unit whichUnit, integer whichItemType returns nothing
+*       - Similar to RemoveExistingItem(). but it decreases item charges of specific item type.
+*
+*    function RemoveAllItems takes unit whichUnit returns nothing
+*       - Similar to RemoveItem(), but it removes all items.
 *
 ************************************************************************************/
 
@@ -31,7 +49,35 @@ library ItemUtils { /* v1.0 | fugatsu.freeforums.net
                 Index = Index + 1;
             }
 
+            thisItem = null;
             return false;
+
+        }
+
+        function IsItemExistsEx(
+            unit    whichUnit,
+            integer whichItemType
+        ) -> integer {
+
+            integer Index = 0;
+            integer Count = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (
+                    thisItem != null &&
+                    GetItemTypeId(thisItem) == whichItemType
+                ) {
+                    Count = Count + 1;
+                }
+
+                Index = Index + 1;
+            }
+
+            thisItem = null;
+            return Count;
 
         }
 
@@ -39,7 +85,7 @@ library ItemUtils { /* v1.0 | fugatsu.freeforums.net
             unit     whichUnit,
             itemtype whichItemClassification,
             item     exceptThisItem
-        ) -> item {
+        ) -> boolean {
 
             integer Index = 0;
             item    thisItem;
@@ -59,6 +105,7 @@ library ItemUtils { /* v1.0 | fugatsu.freeforums.net
                 Index = Index + 1;
             }
 
+            thisItem = null;
             return false;
 
         }
@@ -74,7 +121,10 @@ library ItemUtils { /* v1.0 | fugatsu.freeforums.net
             while (Index != bj_MAX_INVENTORY) {
                 thisItem = UnitItemInSlot(whichUnit, Index);
 
-                if (thisItem != null && GetItemTypeId(thisItem) == whichItemType) {
+                if (
+                    thisItem != null &&
+                    GetItemTypeId(thisItem) == whichItemType
+                ) {
                     RemoveItem(thisItem);
                     thisItem = null;
 
@@ -83,6 +133,55 @@ library ItemUtils { /* v1.0 | fugatsu.freeforums.net
 
                 Index = Index + 1;
             }
+
+            thisItem = null;
+        }
+
+        function RemoveExistingItemByCharges(
+            unit    whichUnit,
+            integer whichItemType
+        ) {
+
+            integer Index = 0;
+            integer Count = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (
+                    thisItem != null &&
+                    GetItemTypeId(thisItem) == whichItemType
+                ) {
+                    Count = GetItemCharges(thisItem);
+
+                    if (Count == 0) {
+                        RemoveItem(thisItem);
+                    } else {
+                        SetItemCharges(thisItem, Count - 1);
+                    }
+
+                    thisItem = null;
+                    return;
+                }
+
+                Index = Index + 1;
+            }
+
+            thisItem = null;
+        }
+
+        function RemoveAllItems(
+            unit    whichUnit
+        ) {
+
+            integer Index = 0;
+
+            while (Index != bj_MAX_INVENTORY) {
+                RemoveItem(UnitItemInSlot(whichUnit, Index));
+                Index = Index + 1;
+            }
+
         }
     }
 }
