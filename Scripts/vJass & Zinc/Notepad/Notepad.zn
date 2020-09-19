@@ -1,42 +1,27 @@
 //! zinc
-library Notepad /* v1.0.0.2
+library Notepad /* v1.0.0.3
 ************************************************************************************
 *
 *    struct Notepad extends array
 *
-*        static method construct takes string path returns nothing
+*        static method construct takes nothing returns nothing
 *        static method write takes string content returns nothing
-*        method close takes nothing returns nothing
-*
-************************************************************************************
-*
-*    Issue:
-*        This snippet won't give you a nice text file, because of the generated 
-*        Preload texts.
+*        method close takes string path returns nothing
 *
 ***********************************************************************************/
 
-{ public {
-    struct Notepad[] {
-        private static string directory;
-
-        public {
-            static method construct( string directory ) {
-                thistype.directory = directory;
-
-                PreloadGenClear();
-                PreloadGenStart();
-            }
-
-            static method write( string content ) {
-                Preload(content);
-            }
-
-            static method close() {
-                PreloadGenEnd(thistype.directory + ".txt");
-                thistype.directory = null;
-            }
-        }
+{ public struct Notepad[] { public {
+    static method construct() {
+        PreloadGenClear();
+        PreloadGenStart();
     }
-}}
+
+    static method write( string content ) {
+        Preload(content);
+    }
+
+    static method close(string directory) {
+        PreloadGenEnd(directory + ".txt");
+    }
+}}}
 //! endzinc
