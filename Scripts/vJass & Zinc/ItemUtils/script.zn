@@ -1,5 +1,5 @@
 //! zinc
-library ItemUtils { /* v2.0.0.0 | fugatsu.freeforums.net
+library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
 ************************************************************************************
 *
 *    Much faster than BJ functions.
@@ -11,6 +11,9 @@ library ItemUtils { /* v2.0.0.0 | fugatsu.freeforums.net
 *
 *    function IsItemExistsEx takes unit whichUnit, integer whichItemType returns integer
 *       - Find specific item type then count how many.
+*
+*    function IsItemExistsByItem takes unit whichUnit, integer whichItemType returns item
+*       - Find specific item type.
 *
 *    function IsItemClassificationExists takes unit whichUnit, integer whichItemType, itemtype whichClassification returns boolean
 *       - Find specific item classification.
@@ -26,6 +29,7 @@ library ItemUtils { /* v2.0.0.0 | fugatsu.freeforums.net
 *
 ************************************************************************************/
 
+{
     public {
         function IsItemExists(
             unit    whichUnit,
@@ -78,6 +82,32 @@ library ItemUtils { /* v2.0.0.0 | fugatsu.freeforums.net
 
             thisItem = null;
             return Count;
+
+        }
+
+        function IsItemExistsByItem(
+            unit    whichUnit,
+            integer whichItemType
+        ) -> item {
+
+            integer Index = 0;
+            item    thisItem;
+
+            while (Index != bj_MAX_INVENTORY) {
+                thisItem = UnitItemInSlot(whichUnit, Index);
+
+                if (
+                    thisItem != null &&
+                    GetItemTypeId(thisItem) == whichItemType
+                ) {
+                    return thisItem;
+                }
+
+                Index = Index + 1;
+            }
+
+            thisItem = null;
+            return null;
 
         }
 
