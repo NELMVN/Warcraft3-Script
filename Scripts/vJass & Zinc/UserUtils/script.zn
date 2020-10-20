@@ -1,13 +1,24 @@
 //! zinc
 library UserUtils /* fugatsu.freeforums.net
+*************************************************************************************
+*
+*    */ requires /*
+*
+*        */ SimError                 /* http://www.wc3c.net/showpost.php?p=1019431&postcount=1
+*
 ************************************************************************************
 *
-*    function UserSetCameraToUnit takes player whichUser, unit whichUnit returns player
+*    It is used for User interactions.
+*
+************************************************************************************
+*
+*    function UserSetCameraToUnit takes player whichUser, unit whichUnit returns nothing
+*    function UserSimError takes player whichUser, unit whichUnit, string msg returns nothing
 *
 ************************************************************************************/
 
 { public {
-    function UserSetCameraToUnit -> player (
+    function UserSetCameraToUnit (
         player whichUser,
         unit   whichUnit
     ) {
@@ -18,8 +29,17 @@ library UserUtils /* fugatsu.freeforums.net
             ClearSelection();
             SelectUnit(whichUnit, true);
         }
+    }
 
-        return whichUser;
+    function UserSimError(
+        player whichUser,
+        unit   whichUnit,
+        string msg
+    ) {
+        if (IsUnitSelected(whichUnit, whichUser)) {
+            SimError(whichUser, msg);
+            PingMinimapForPlayer(whichUser, GetUnitX(whichUnit), GetUnitY(whichUnit), 1.5);
+        }
     }
 }}
 //! endzinc
