@@ -1,5 +1,5 @@
 //! zinc
-library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
+library ItemUtils /* v2.0.0.2 | fugatsu.freeforums.net
 ************************************************************************************
 *
 *    Much faster than BJ functions.
@@ -18,10 +18,10 @@ library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
 *    function IsItemClassificationExists takes unit whichUnit, integer whichItemType, itemtype whichClassification returns boolean
 *       - Find specific item classification.
 *
-*    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns nothing
+*    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns boolean
 *       - Similar to RemoveItem(), but it removes specific item type.
 *
-*    function RemoveExistingItemByCharges takes unit whichUnit, integer whichItemType returns nothing
+*    function RemoveExistingItemByCharges takes unit whichUnit, integer whichItemType returns boolean
 *       - Similar to RemoveExistingItem(). but it decreases item charges of specific item type.
 *
 *    function RemoveAllItems takes unit whichUnit returns nothing
@@ -143,7 +143,7 @@ library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
         function RemoveExistingItem(
             unit    whichUnit,
             integer whichItemType
-        ) {
+        ) -> boolean {
 
             integer Index = 0;
             item    thisItem;
@@ -158,19 +158,20 @@ library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
                     RemoveItem(thisItem);
                     thisItem = null;
 
-                    return;
+                    return true;
                 }
 
                 Index = Index + 1;
             }
 
             thisItem = null;
+            return false;
         }
 
         function RemoveExistingItemByCharges(
             unit    whichUnit,
             integer whichItemType
-        ) {
+        ) -> boolean {
 
             integer Index = 0;
             integer Count = 0;
@@ -192,13 +193,14 @@ library ItemUtils /* v2.0.0.1 | fugatsu.freeforums.net
                     }
 
                     thisItem = null;
-                    return;
+                    return true;
                 }
 
                 Index = Index + 1;
             }
 
             thisItem = null;
+            return false;
         }
 
         function RemoveAllItems(
