@@ -51,7 +51,3 @@ scope HelloWorld2 initializer main
     endfunction
 endscope
 ```
-
-## (Optional) .pld to .html
-
-If you are looking for a tool, click [this](https://github.com/NELMVN/.pld2.html)
