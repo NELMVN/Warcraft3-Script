@@ -1,5 +1,4 @@
-//! zinc
-library ItemUtils /* v2.0.0.2 | fugatsu.freeforums.net
+library ItemUtils /* v3.0.0.0 | fugatsu.freeforums.net
 ************************************************************************************
 *
 *    Much faster than BJ functions.
@@ -15,7 +14,7 @@ library ItemUtils /* v2.0.0.2 | fugatsu.freeforums.net
 *    function IsItemExistsByItem takes unit whichUnit, integer whichItemType returns item
 *       - Find specific item type.
 *
-*    function IsItemClassificationExists takes unit whichUnit, integer whichItemType, itemtype whichClassification returns boolean
+*    function IsItemClassificationExists takes unit whichUnit, itemtype whichClassification, item exceptThisItem returns boolean
 *       - Find specific item classification.
 *
 *    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns boolean
@@ -29,192 +28,136 @@ library ItemUtils /* v2.0.0.2 | fugatsu.freeforums.net
 *
 ************************************************************************************/
 
-{
-    public {
-        function IsItemExists(
-            unit    whichUnit,
-            integer whichItemType
-        ) -> boolean {
+    function IsItemExists takes unit whichUnit, integer whichItemType returns boolean
+        local integer Slot   = bj_MAX_INVENTORY
+        local item    Object
 
-            integer Index = 0;
-            item    thisItem;
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
+            if Object != null and GetItemTypeId(Object) == whichItemType then
+                set Object = null
+                return true
+            endif
+        endloop
 
-                if (
-                    thisItem != null &&
-                    GetItemTypeId(thisItem) == whichItemType
-                ) {
-                    thisItem = null;
-                    return true;
-                }
+        set Object = null
+        return false
+    endfunction
 
-                Index = Index + 1;
-            }
+    function IsItemExistsEx takes unit whichUnit, integer whichItemType returns integer
+        local integer Slot   = bj_MAX_INVENTORY
+        local integer Count  = 0
+        local item    Object
 
-            thisItem = null;
-            return false;
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-        }
+            if Object != null and GetItemTypeId(Object) == whichItemType then
+                set Count = Count + 1
+            endif
+        endloop
 
-        function IsItemExistsEx(
-            unit    whichUnit,
-            integer whichItemType
-        ) -> integer {
+        set Object = null
+        return Count
+    endfunction
 
-            integer Index = 0;
-            integer Count = 0;
-            item    thisItem;
+    function IsItemExistsByItem takes unit whichUnit, integer whichItemType returns item
+        local integer Slot   = bj_MAX_INVENTORY
+        local item    Object
 
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-                if (
-                    thisItem != null &&
-                    GetItemTypeId(thisItem) == whichItemType
-                ) {
-                    Count = Count + 1;
-                }
+            if Object != null and GetItemTypeId(Object) == whichItemType then
+                return Object
+            endif
+        endloop
 
-                Index = Index + 1;
-            }
+        set Object = null
+        return null
+    endfunction
 
-            thisItem = null;
-            return Count;
+    function IsItemClassificationExists takes unit whichUnit, itemtype whichItemClassification, item exceptThisItem returns boolean
+        local integer Slot   = bj_MAX_INVENTORY
+        local item    Object
 
-        }
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-        function IsItemExistsByItem(
-            unit    whichUnit,
-            integer whichItemType
-        ) -> item {
+            if Object != null and Object != exceptThisItem and GetItemType(Object) == whichItemClassification then
+                set Object = null
+                return true
+            endif
+        endloop
 
-            integer Index = 0;
-            item    thisItem;
+        set Object = null
+        return false
+    endfunction
 
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
+    function RemoveExistingItem takes unit whichUnit, integer whichItemType returns boolean
+        local integer Slot   = bj_MAX_INVENTORY
+        local item    Object
 
-                if (
-                    thisItem != null &&
-                    GetItemTypeId(thisItem) == whichItemType
-                ) {
-                    return thisItem;
-                }
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-                Index = Index + 1;
-            }
+            if Object != null and GetItemTypeId(Object) == whichItemType then
+                call RemoveItem(Object)
+                set Object = null
+                return true
+            endif
+        endloop
 
-            thisItem = null;
-            return null;
+        set Object = null
+        return false
+    endfunction
 
-        }
+    function RemoveExistingItemByCharges takes unit whichUnit, integer whichItemType returns boolean
+        local integer Slot   = bj_MAX_INVENTORY
+        local integer Count  = 0
+        local item    Object
 
-        function IsItemClassificationExists(
-            unit     whichUnit,
-            itemtype whichItemClassification,
-            item     exceptThisItem
-        ) -> boolean {
+        loop
+            exitwhen Slot == 0
+            set Slot   = Slot - 1
+            set Object = UnitItemInSlot(whichUnit, Slot)
 
-            integer Index = 0;
-            item    thisItem;
+            if Object != null and GetItemTypeId(Object) == whichItemType then
+                set Count = GetItemCharges(Object)
 
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
+                if Count == 1 then
+                    call RemoveItem(Object)
+                else
+                    call SetItemCharges(Object, Count - 1)
+                endif
 
-                if (
-                    thisItem != null &&
-                    thisItem != exceptThisItem &&
-                    GetItemType(thisItem) == whichItemClassification
-                ) {
-                    thisItem = null;
-                    return true;
-                }
+                set Object = null
+                return true
+            endif
+        endloop
 
-                Index = Index + 1;
-            }
+        set Object = null
+        return false
+    endfunction
 
-            thisItem = null;
-            return false;
+    function RemoveAllItems takes unit whichUnit returns nothing
+        local integer Slot = bj_MAX_INVENTORY
 
-        }
-
-        function RemoveExistingItem(
-            unit    whichUnit,
-            integer whichItemType
-        ) -> boolean {
-
-            integer Index = 0;
-            item    thisItem;
-
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
-
-                if (
-                    thisItem != null &&
-                    GetItemTypeId(thisItem) == whichItemType
-                ) {
-                    RemoveItem(thisItem);
-                    thisItem = null;
-
-                    return true;
-                }
-
-                Index = Index + 1;
-            }
-
-            thisItem = null;
-            return false;
-        }
-
-        function RemoveExistingItemByCharges(
-            unit    whichUnit,
-            integer whichItemType
-        ) -> boolean {
-
-            integer Index = 0;
-            integer Count = 0;
-            item    thisItem;
-
-            while (Index != bj_MAX_INVENTORY) {
-                thisItem = UnitItemInSlot(whichUnit, Index);
-
-                if (
-                    thisItem != null &&
-                    GetItemTypeId(thisItem) == whichItemType
-                ) {
-                    Count = GetItemCharges(thisItem);
-
-                    if (Count == 0) {
-                        RemoveItem(thisItem);
-                    } else {
-                        SetItemCharges(thisItem, Count - 1);
-                    }
-
-                    thisItem = null;
-                    return true;
-                }
-
-                Index = Index + 1;
-            }
-
-            thisItem = null;
-            return false;
-        }
-
-        function RemoveAllItems(
-            unit    whichUnit
-        ) {
-
-            integer Index = 0;
-
-            while (Index != bj_MAX_INVENTORY) {
-                RemoveItem(UnitItemInSlot(whichUnit, Index));
-                Index = Index + 1;
-            }
-
-        }
-    }
-}
-//! endzinc
+        loop
+            exitwhen Slot == 0
+            set Slot = Slot - 1
+            call RemoveItem(UnitItemInSlot(whichUnit, Slot))
+        endloop
+    endfunction
+endlibrary
