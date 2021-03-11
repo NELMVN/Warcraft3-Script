@@ -1,41 +1,38 @@
-//! zinc
-library TimedEffect /* v2.0.0.0 | Copyright © github.com/nelmvn
-************************************************************************************
+library TimedEffect /* v2.0.0.1 | Copyright © github.com/nelmvn
+*************************************************************************************
+*
+*    */ uses /*
+*
+*        */ CTL    /*  https://github.com/nestharus/JASS/blob/master/jass/Systems/ConstantTimerLoop32/script.j
+*
+*************************************************************************************
 *
 *    struct TimedEffect extends array
-*       static method Apply takes effect whichEffect, real Duration returns nothing
+*       static method Apply takes effect whichEffect, real Duration returns effect
 *
 ************************************************************************************/
 
-    requires 
-    
-        Alloc,      /* https://github.com/nestharus/JASS/blob/master/jass/Systems/Alloc/Standard/script.j */
-        TimerUtils  /* http://wc3c.net/showthread.php?t=101322 */
+    struct TimedEffect extends array
+        private effect effect
+        private real real
 
-{
-    public struct TimedEffect[] {
-        module Alloc;
-        private effect effect;
+        implement CTLExpire
+            if .real <= 0 then
+                call DestroyEffect(.effect)
 
-        public static method Apply (effect whichEffect, real Duration) -> effect {
-            thistype this = thistype.allocate();
-            this.effect = whichEffect;
+                set .effect = null
+                set .real = 0
+                call destroy()
+            else
+                set .real = .real - .031250000
+            endif
+        implement CTLEnd
 
-            TimerStart(NewTimerEx(this), Duration, false, function() {
-                timer Clock = GetExpiredTimer();
-                thistype this = GetTimerData(Clock);
-
-                DestroyEffect(this.effect);
-                this.effect = null;
-
-                ReleaseTimer(Clock);
-                this.deallocate();
-
-                Clock = null;
-            });
-
-            return this.effect;
-        }
-    }
-}
-//! endzinc
+        static method Apply takes effect whichEffect, real Duration returns effect
+            local thistype this = thistype.create()
+            set .effect = whichEffect
+            set .real = Duration
+            return whichEffect
+        endmethod
+    endstruct
+endlibrary
