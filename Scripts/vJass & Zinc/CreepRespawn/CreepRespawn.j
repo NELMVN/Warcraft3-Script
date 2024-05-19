@@ -1,7 +1,9 @@
-library CreepRespawn initializer onInit /*
+library CreepRespawn initializer onInit /* v3.0.2
 *************************************************************************************
 *
-*    A simple Creep Respawn System designed for RPG maps.
+*    A simple Creep Respawn System tailored for RPG maps. It does not requires
+*    SetUnitUserData and GetUnitUserData. As a result, it is compatible with any
+*    existing unit indexer.
 *
 *************************************************************************************
 *
@@ -14,7 +16,22 @@ library CreepRespawn initializer onInit /*
 *
 *       */ RegisterPlayerUnitEvent /*  https://www.hiveworkshop.com/threads/snippet-registerevent-pack.250266/
 *
+*
 *************************************************************************************
+*
+*    NOTE: If you’re using an older version of Warcraft 3, change the values of 
+*          trn.red, trn.green, trn.blue, and trn.alphaMax to 255. The drawback is 
+*          that you can't save and load the RGB color of the creep.
+*/
+
+//! textmacro CREEP_RESPAWN_TRANSPARENCY
+    set trn.red = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_RED)
+    set trn.green = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_GREEN)
+    set trn.blue = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_BLUE)
+    set trn.alphaMax = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_ALPHA)
+//! endtextmacro
+
+/************************************************************************************
 *
 *   Configurations
 *
@@ -45,13 +62,16 @@ library CreepRespawn initializer onInit /*
 *   ---------
 *
 *   function AddCreepRespawn takes unit whichCreep returns integer
-*       - Include a unit in the Creep Respawn System.
+*       - Include a unit to the Creep Respawn System. The function returns the Creep 
+*         Index associated with that unit.
 *
 *   function AddCreepRespawnEx takes unit whichCreep, real duration returns integer
-*       - Include a unit in the Creep Respawn System with a custom duration.
+*       - Include a unit to the Creep Respawn System with a custom duration. The
+*         function returns the Creep Index associated with that unit.
 *
 *   function SetCreepRespawn takes unit whichCreep, boolean enable returns boolean
-*       - Toggleable creep respawning.
+*       - Toggleable creep respawning. The function returns whether it succeeded or
+*         failed.
 *
 *************************************************************************************
 *
@@ -205,10 +225,7 @@ library CreepRespawn initializer onInit /*
                         set trn = transparent.create()
                         set trn.unit = I[creepIndex]
                         set trn.alpha = 0
-                        set trn.red = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_RED)
-                        set trn.green = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_GREEN)
-                        set trn.blue = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_BLUE)
-                        set trn.alphaMax = BlzGetUnitIntegerField(I[creepIndex], UNIT_IF_TINTING_COLOR_ALPHA)
+                        //! runtextmacro CREEP_RESPAWN_TRANSPARENCY()
 
                         call SetUnitVertexColor(trn.unit, trn.red, trn.green, trn.blue, trn.alpha)
                     endif
